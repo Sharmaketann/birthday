@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Samik: The Wrap · Birthday 2026</title>
+  <meta name="description" content="Samik: The Wrap — An interactive birthday experience. Stats, memories, memes, and a secret ending. Happy Birthday!">
+  <meta name="theme-color" content="#071B1C">
+  <meta property="og:title" content="Samik: The Wrap · 2026">
+  <meta property="og:description" content="10 eras. Unlimited chaos. Zero punctuality. Happy Birthday Samik.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+<body>
+
+<button id="vol-btn" aria-label="Toggle mute">🔊</button>
+<canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+<!-- SLIDE 0 · PRELOADER -->
+<div class="slide" id="s0" role="status" aria-label="Loading Samik The Wrap">
+  <div class="pre-title">SAMIK: THE WRAP</div>
+  <div class="pre-sub">Compiling eras<span id="pre-ellipsis"></span></div>
+  <div class="pre-dots" aria-hidden="true">
+    <div class="pre-dot"></div><div class="pre-dot"></div><div class="pre-dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 1 · TAP TO START -->
+<div class="slide" id="s1" aria-label="Welcome screen">
+  <div style="text-align:center; width:100%; max-width:500px;">
+    <h1 class="hl h1">HEY SAMIK.</h1>
+    <div class="tw-wrap" aria-live="polite">
+      <p class="tw-line" id="tw0">&ldquo;This isn&rsquo;t a birthday.&rdquo;</p>
+      <p class="tw-line" id="tw1">&ldquo;This is your highlight reel.&rdquo;</p>
+      <p class="tw-line" id="tw2">&ldquo;And yes&mdash;there are receipts.&rdquo;</p>
+    </div>
+    <button class="btn-p" id="start-btn" aria-label="Start The Wrap">&#9654; START THE WRAP</button>
+  </div>
+</div>
+
+<!-- SLIDE 2 · TITLE CARD -->
+<div class="slide" id="s2" aria-label="The Samik Arc title card">
+  <div style="max-width:520px; width:100%; text-align:center;">
+    <div class="badge">A Samik Production &middot; 2026</div>
+    <h2 class="hl h1">THE<br>SAMIK<br>ARC</h2>
+    <p class="sub-accent">From tiny chaos &rarr; premium chaos.</p>
+  </div>
+</div>
+
+<!-- SLIDE 3 · PATCH NOTES -->
+<div class="slide" id="s3" aria-label="Patch notes">
+  <div class="card" aria-label="Samik changelog">
+    <div class="patch-tag">&#9881; Changelog</div>
+    <h3 class="hl h3" style="margin-bottom:4px;">PATCH NOTES</h3>
+    <p class="patch-ver">SAMIK vNOW</p>
+    <ul class="patch-list" aria-label="Updates">
+      <li><span class="plus">+</span> Confidence: maxed</li>
+      <li><span class="plus">+</span> &lsquo;5 minutes&rsquo; feature expanded to 45</li>
+      <li><span class="plus">+</span> Main character energy: always-on</li>
+      <li><span class="plus">+</span> Patience: still in beta</li>
+      <li><span class="dim">&#126; Punctuality: unchanged (known bug)</span></li>
+    </ul>
+    <div class="install-wrap">
+      <div class="install-meta">
+        <span id="install-status">Installing&hellip;</span>
+        <span id="install-pct">0%</span>
+      </div>
+      <div class="install-track"><div class="install-fill" id="install-fill"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 · STAT CARDS -->
+<div class="slide" id="s4" aria-label="Your stats">
+  <div class="story-bar" id="stat-bar" role="progressbar" aria-label="Stat progress"></div>
+  <div class="stat-wrap" id="stat-wrap">
+    <div class="stat-card" data-s="0">
+      <div class="label">Your #1 talent</div>
+      <div class="stat-hl">TURNING PLANS<br>INTO &ldquo;WE&rsquo;LL SEE&rdquo;</div>
+      <div class="stat-num">99%</div>
+      <div class="label">conversion rate</div>
+    </div>
+    <div class="stat-card" data-s="1">
+      <div class="label">Most used phrase</div>
+      <div class="stat-hl">&ldquo;BRO<br>TRUST ME&rdquo;</div>
+      <div class="stat-num">&#8734;</div>
+      <div class="label">times deployed</div>
+    </div>
+    <div class="stat-card" data-s="2">
+      <div class="label">Signature move</div>
+      <div class="stat-hl">ARRIVING&hellip;<br>EVENTUALLY</div>
+      <div class="stat-num">+47</div>
+      <div class="label">avg. mins late</div>
+    </div>
+    <div class="stat-card" data-s="3">
+      <div class="label">Emotional range</div>
+      <div class="stat-hl" style="font-size:clamp(2rem,7vw,4.5rem);">&#128514; &rarr; &#128128; &rarr; &ldquo;I&rsquo;M FINE&rdquo;</div>
+      <div class="stat-num" style="font-size:clamp(3rem,10vw,6rem);">All 3</div>
+      <div class="label">in under 4 minutes</div>
+    </div>
+    <div class="stat-card" data-s="4">
+      <div class="label">Social style</div>
+      <div class="stat-hl">ROAST FIRST.<br>APOLOGIZE NEVER.</div>
+      <div class="stat-num" style="font-size:clamp(2rem,6vw,4rem); line-height:1.2;">(or later)</div>
+      <div class="label">usually later tbh</div>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="btn-ctrl" id="stat-pause" aria-label="Pause stat cards">&#9208; Pause</button>
+    <button class="btn-ctrl" id="stat-next"  aria-label="Next stat">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- SLIDE 5 · MEMORIES -->
+<div class="slide" id="s5" aria-label="10-memory storyline">
+  <img class="mem-bg" id="mem-img" src="" alt="" loading="lazy">
+  <div class="mem-overlay"></div>
+  <div class="mem-top">
+    <div class="tdots" id="tdots" role="tablist" aria-label="Memory timeline"></div>
+    <div class="mem-meta">
+      <div class="mem-ctr" id="mem-ctr">01 / 10</div>
+      <div class="mem-era" id="mem-era">The Origin</div>
+    </div>
+  </div>
+  <div class="mem-bottom">
+    <div class="mem-hl" id="mem-hl">THE ORIGIN PATCH</div>
+    <p class="mem-txt" id="mem-txt">Small human. Huge opinions. Zero fear.</p>
+  </div>
+  <button class="mem-pause-btn" id="mem-pause" aria-label="Pause memories">&#9208; Pause</button>
+  <button class="mem-nav mem-prev hidden" id="mem-prev" aria-label="Previous memory">&#8249;</button>
+  <button class="mem-nav mem-next-btn" id="mem-next" aria-label="Next memory">&#8250;</button>
+</div>
+
+<!-- SLIDE 6 · MEME MONTAGE -->
+<div class="slide" id="s6" aria-label="The Receipts">
+  <h2 class="hl h3" style="text-align:center; margin-bottom:6px;">THE RECEIPTS</h2>
+  <p style="font-family:'Inter',sans-serif; font-size:0.8rem; color:var(--cream-muted); margin-bottom:14px; letter-spacing:0.05em;">tap to pause &middot; tap again to continue</p>
+  <div class="meme-grid" id="meme-grid" role="img" aria-label="Meme slideshow">
+    <div class="meme-pause-badge">PAUSED</div>
+  </div>
+  <button class="btn-ctrl" id="meme-skip" style="margin-top:14px;" aria-label="Continue to final message">Continue &rarr;</button>
+</div>
+
+<!-- SLIDE 7 · FINAL MESSAGE -->
+<div class="slide" id="s7" aria-label="Final message">
+  <div style="text-align:center; max-width:440px; width:100%;">
+    <h2 class="hl h3" style="margin-bottom:4px;">REAL TALK</h2>
+    <p class="label" style="color:var(--accent); margin-bottom:0;">(short version)</p>
+    <div class="final-lines" aria-live="polite">
+      <p class="fl" id="fl0">&ldquo;You&rsquo;re loud, hilarious, and somehow always right.&rdquo;</p>
+      <p class="fl big" id="fl1">Happy Birthday, Samik.</p>
+      <p class="fl" id="fl2">&ldquo;Stay iconic. Try being on time once.&rdquo;</p>
+    </div>
+    <button class="btn-p" id="final-cta" aria-label="See your legend card">See Your Card &rarr;</button>
+  </div>
+</div>
+
+<!-- SLIDE 8 · SHARE CARD -->
+<div class="slide" id="s8" aria-label="Certified Legend share card">
+  <div class="share-card" id="share-card-el">
+    <div class="share-badge-el">&#10022; Certified Legend</div>
+    <h2 class="hl h2" style="margin-bottom:4px;">SAMIK</h2>
+    <p style="font-family:'Inter',sans-serif; font-size:0.88rem; color:var(--accent);">Class of Legendary &middot; 2026 Edition</p>
+    <div class="share-grid">
+      <div class="share-block"><div class="share-val">10</div><div class="share-key">Eras Unlocked</div></div>
+      <div class="share-block"><div class="share-val">&#8734;</div><div class="share-key">Bro Trust Me&rsquo;s</div></div>
+      <div class="share-block"><div class="share-val">99%</div><div class="share-key">Main Character</div></div>
+      <div class="share-block"><div class="share-val">0</div><div class="share-key">On-Time Arrivals</div></div>
+    </div>
+    <p class="share-foot">samik: the wrap &middot; 2026</p>
+  </div>
+  <div class="share-actions">
+    <button class="btn-p"  id="dl-btn"     aria-label="Download legend card" style="font-size:0.83rem; padding:12px 22px;">&#8595; Download Card</button>
+    <button class="btn-p"  id="finale-btn" aria-label="Watch birthday finale" style="font-size:0.83rem; padding:12px 22px; background:transparent; border:1px solid var(--accent); color:var(--accent); box-shadow:0 0 24px rgba(67,191,178,0.15);">&#127916; Watch Finale</button>
+    <button class="btn-s"  id="replay-btn" aria-label="Replay from the start">&#8635; Replay</button>
+    <button class="btn-s"  id="secret-btn" aria-label="Secret ending" style="border-color:rgba(67,191,178,0.22); color:var(--accent);">&#128274; Secret Ending</button>
+  </div>
+</div>
+
+<!-- SLIDE 9 · SHARK FINALE -->
+<div class="slide" id="s9" aria-label="Happy Birthday Samik finale">
+  <video class="shark-video" id="shark-video" src="shark.webm" muted playsinline loop></video>
+  <div class="shark-vignette"></div>
+  <div class="shark-text-wrap">
+    <div class="shark-hb"  id="shk-hb">HAPPY BIRTHDAY</div>
+    <div class="shark-name" id="shk-name">SAMIK</div>
+    <div class="shark-accent-line" id="shk-line"></div>
+    <div class="shark-year" id="shk-year">2026 &middot; Stay Legendary</div>
+  </div>
+  <button class="shark-unmute" id="shk-unmute" aria-label="Unmute video">&#128263; Unmute</button>
+  <button class="shark-replay" id="shk-replay" aria-label="Replay from beginning">&#8635; Replay</button>
+  <button class="shark-mag"    id="mag-btn"    aria-label="Read The Wrap Magazine" onclick="window.location.href='magazine.html'">&#128214; Read The Magazine</button>
+</div>
+
+<!-- SECRET ENDING OVERLAY -->
+<div id="secret" role="dialog" aria-modal="true" aria-label="Secret ending - for Samik's eyes only">
+  <div class="secret-gate" id="secret-gate">
+    <div class="gate-icon">&#128274;</div>
+    <div class="gate-label">CLASSIFIED &middot; ACCESS RESTRICTED</div>
+    <div class="gate-sub">Enter the access code to continue</div>
+    <div class="pin-dots" id="pin-dots">
+      <div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <input class="pin-input" id="pin-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="off" aria-label="Enter 8-digit access code">
+    <div class="gate-error" id="gate-error">ACCESS DENIED</div>
+    <div class="gate-tap">tap &middot; type to enter &middot; press Enter to submit</div>
+  </div>
+  <div class="secret-content" id="secret-content">
+    <div class="secret-stamp">CLASSIFIED &middot; FOR SAMIK&rsquo;S EYES ONLY</div>
+    <h2 class="hl h3" style="margin-bottom:4px;">THE REAL FILE</h2>
+    <p class="secret-body">
+      No roasting here.<br><br>
+      Real talk? You&rsquo;re one of those rare people who makes every room better just by being in it.<br><br>
+      <strong>Funny. Sharp. Loyal. Unforgettable.</strong><br><br>
+      The world&rsquo;s genuinely a better place with you in it.<br>
+      Keep being exactly you.<br><br>
+      <strong>Happy Birthday. For real this time. &#127874;</strong>
+    </p>
+    <button class="btn-s" id="secret-close" aria-label="Close secret ending" style="margin-top:8px;">&larr; Back to Your Card</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

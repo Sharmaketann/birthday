@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Samik — Birthday Magazine 2026</title>
+  <meta name="description" content="The Wrap Magazine — Samik's definitive birthday retrospective. 10 eras, unlimited chaos, zero punctuality.">
+  <meta name="theme-color" content="#A8D672">
+  <meta property="og:title" content="Samik: The Wrap Magazine · 2026">
+  <meta property="og:description" content="A full-bleed editorial birthday retrospective. Class of Legendary.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=Montserrat:wght@700;900&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:   #111010; --warm: #F8F4EF; --warm2: #EDE6DC; --warm3: #E2D8CB;
+      --gold:  #B8860B; --red:  #C0392B; --teal: #43BFB2;
+      --green: #A8D672; --beige: #F2E8D6;
+      --rule:  rgba(17,16,16,0.12);
+      --serif: 'Playfair Display', Georgia, serif;
+      --dm:    'DM Serif Display', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+      --disp:  'Montserrat', sans-serif;
+      --hand:  'Caveat', cursive;
+    }
+    html { overflow: hidden; height: 100%; }
+    body { font-family: var(--sans); background: var(--warm); color: var(--ink); -webkit-font-smoothing: antialiased; height: 100vh; overflow: hidden; }
+    img { display: block; }
+
+    /* ── NAV ── */
+    .mag-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 28px; background: rgba(248,244,239,0.93); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .mag-nav a { font-size: 0.74rem; color: var(--ink); text-decoration: none; letter-spacing: 0.08em; border-bottom: 1px solid transparent; transition: border-color .2s; }
+    .mag-nav a:hover { border-color: var(--ink); }
+    .mag-masthead { font-family: var(--disp); font-size: 0.7rem; font-weight: 900; letter-spacing: 0.32em; text-transform: uppercase; }
+    .mag-issue { font-size: 0.68rem; color: rgba(17,16,16,.38); letter-spacing: 0.12em; }
+
+    /* ── HORIZONTAL PAGES CONTAINER ── */
+    .mag-pages {
+      display: flex; width: 100vw; height: 100vh;
+      overflow-x: scroll; scroll-snap-type: x mandatory;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .mag-pages::-webkit-scrollbar { display: none; }
+
+    /* ── PAGE NAV ARROWS ── */
+    .page-prev, .page-next {
+      position: fixed; top: 50%; transform: translateY(-50%); z-index: 999;
+      background: rgba(248,244,239,0.92); border: 1px solid rgba(17,16,16,0.14);
+      backdrop-filter: blur(12px); width: 44px; height: 44px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--ink); font-size: 1.15rem; line-height: 1;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.13);
+      transition: opacity .25s, background .2s, box-shadow .2s;
+    }
+    .page-prev { left: 16px; }
+    .page-next { right: 16px; }
+    .page-prev:hover, .page-next:hover { background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.18); }
+    .page-prev.hidden, .page-next.hidden { opacity: 0; pointer-events: none; }
+
+    /* ── PAGE COUNTER ── */
+    .page-counter {
+      position: fixed; bottom: 26px; right: 24px; z-index: 999;
+      font-family: var(--disp); font-size: 0.56rem; font-weight: 900;
+      letter-spacing: 0.22em; color: rgba(17,16,16,0.3); text-transform: uppercase;
+    }
+
+    /* ── PAGE DOTS ── */
+    .page-dots {
+      position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+      z-index: 999; display: flex; flex-direction: row; gap: 10px;
+      background: rgba(248,244,239,0.9); padding: 8px 16px; border-radius: 20px;
+      backdrop-filter: blur(10px); border: 1px solid rgba(17,16,16,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    }
+    .page-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(17,16,16,.18); border: none; cursor: pointer; padding: 0; transition: background .3s, transform .3s; }
+    .page-dot.on { background: var(--ink); transform: scale(1.55); }
+
+    /* ── PAGE BASE ── */
+    .page { scroll-snap-align: start; flex-shrink: 0; width: 100vw; height: 100vh; position: relative; overflow: hidden; padding-top: 48px; }
+
+    /* Page-turn depth shadow on left edge (except first page) */
+    .page + .page::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 26px;
+      background: linear-gradient(to right, rgba(0,0,0,0.18), transparent);
+      z-index: 5; pointer-events: none;
+    }
+
+    /* ══════════════════════════════════
+       IMAGE TREATMENT SYSTEM
+    ══════════════════════════════════ */
+
+    /* 1. POLAROID */
+    .frm-polaroid {
+      background: #fff; padding: 10px 10px 38px;
+      box-shadow: 3px 6px 28px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.08);
+      display: inline-block; position: relative;
+    }
+    .frm-polaroid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .frm-polaroid .cap { font-family: var(--hand); font-size: 1rem; color: #333; text-align: center; position: absolute; bottom: 8px; left: 0; right: 0; }
+
+    /* 2. CIRCLE */
+    .frm-circle { border-radius: 50%; overflow: hidden; aspect-ratio: 1/1; }
+    .frm-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* 3. ARCH (rounded top = tombstone) */
+    .frm-arch { border-radius: 50% 50% 0 0 / 55% 55% 0 0; overflow: hidden; }
+    .frm-arch img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* 4. DOUBLE BORDER */
+    .frm-double { border: 3px solid var(--ink); outline: 3px solid var(--ink); outline-offset: 7px; overflow: hidden; }
+    .frm-double img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* 5. DIAGONAL parallelogram */
+    .frm-diag { clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%); overflow: hidden; }
+    .frm-diag img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* 6. HEXAGON */
+    .frm-hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); aspect-ratio: 1/1; overflow: hidden; }
+    .frm-hex img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* 7. FILM STRIP */
+    .frm-film { position: relative; overflow: hidden; }
+    .frm-film::before, .frm-film::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 20px; z-index: 2;
+      background: repeating-linear-gradient(to bottom, #111 0px, #111 6px, transparent 6px, transparent 14px);
+    }
+    .frm-film::before { left: 0; }
+    .frm-film::after  { right: 0; }
+    .frm-film img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* 8. GOLD FRAME */
+    .frm-gold { border: 6px solid var(--gold); box-shadow: inset 0 0 0 2px var(--gold), 0 4px 24px rgba(184,134,11,0.25); overflow: hidden; }
+    .frm-gold img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* 9. TORN edge (clip-path zig-zag bottom) */
+    .frm-torn { clip-path: polygon(0 0, 100% 0, 100% 82%, 95% 88%, 90% 82%, 85% 90%, 80% 84%, 74% 92%, 68% 84%, 62% 90%, 56% 83%, 50% 91%, 44% 84%, 38% 90%, 32% 83%, 26% 91%, 20% 84%, 14% 90%, 8% 82%, 0 88%); overflow: hidden; }
+    .frm-torn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* 10. CORNER NOTCH */
+    .frm-notch { clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px); overflow: hidden; }
+    .frm-notch img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ══════════════════════════════════
+       PAGE 1 — COVER (Full-bleed editorial)
+    ══════════════════════════════════ */
+    #pg1 { padding-top: 0; background: #0d0d0d; }
+
+    /* Full-bleed photo */
+    .cov-bg { position: absolute; inset: 0; z-index: 0; }
+    .cov-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .cov-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg,
+        rgba(0,0,0,0.42) 0%,
+        rgba(0,0,0,0.0)  28%,
+        rgba(0,0,0,0.0)  52%,
+        rgba(0,0,0,0.72) 100%);
+    }
+
+    /* Tiny issue bar at very top */
+    .cov-topbar {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 26px;
+      font-family: var(--disp); font-size: 0.46rem; font-weight: 700;
+      letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.55);
+    }
+
+    /* Masthead — large outlined green text */
+    .cov-masthead-big {
+      position: absolute; top: 22px; left: 0; right: 0; z-index: 10;
+      padding: 0 22px;
+      font-family: var(--disp); font-weight: 900; letter-spacing: 0.04em;
+      text-transform: uppercase; line-height: 1;
+      font-size: clamp(4.5rem, 13vw, 10.5rem);
+      color: transparent;
+      -webkit-text-stroke: 2.5px var(--green);
+    }
+
+    /* Left editorial teasers */
+    .cov-teasers {
+      position: absolute; left: 26px; top: 50%; transform: translateY(-50%);
+      z-index: 10; display: flex; flex-direction: column; gap: 20px; max-width: 148px;
+    }
+    .cov-teaser { border-left: 2px solid var(--green); padding-left: 10px; }
+    .cov-teaser-lbl {
+      font-family: var(--disp); font-size: 0.48rem; font-weight: 900;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); margin-bottom: 5px;
+    }
+    .cov-teaser-txt { font-size: 0.67rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+
+    /* Bottom name block */
+    .cov-bottom { position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; padding: 0 26px 30px; }
+    .cov-name {
+      font-family: var(--dm); font-style: italic;
+      font-size: clamp(3.6rem, 9.5vw, 8rem);
+      line-height: 0.88; letter-spacing: -0.02em; text-transform: uppercase;
+      color: var(--beige);
+    }
+    .cov-tagline {
+      font-family: var(--disp); font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: rgba(255,255,255,0.42); margin-top: 11px;
+    }
+
+    /* Nav becomes invisible glass on cover page */
+    .on-cover .mag-nav { background: transparent; backdrop-filter: none; border-color: transparent; }
+    .on-cover .mag-nav a,
+    .on-cover .mag-masthead,
+    .on-cover .mag-issue { color: rgba(255,255,255,0.45); }
+    .on-cover .page-next { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); color: #fff; }
+
+    /* ══════════════════════════════════
+       PAGE 2 — CONTRIBUTORS
+    ══════════════════════════════════ */
+    #pg2 { background: #fafafa; display: grid; grid-template-columns: 35% 65%; }
+
+    /* ── Left column ── */
+    .pg2-left { display: flex; flex-direction: column; border-right: 1px solid var(--rule); overflow: hidden; }
+    .pg2-group-photo { flex-shrink: 0; height: 42%; overflow: hidden; }
+    .pg2-group-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(1) contrast(1.05); }
+    .pg2-credits { flex: 1; padding: clamp(14px,2vw,24px) clamp(14px,2vw,24px) 0; display: flex; flex-direction: column; overflow: hidden; }
+    .pg2-credit-item { margin-bottom: clamp(9px,1.3vh,15px); }
+    .pg2-credit-role {
+      font-family: var(--disp); font-size: 0.46rem; font-weight: 900;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); margin-bottom: 1px;
+    }
+    .pg2-credit-name { font-size: 0.7rem; color: rgba(17,16,16,0.48); line-height: 1.3; }
+    .pg2-address {
+      margin-top: auto; padding: clamp(10px,1.4vh,16px) clamp(14px,2vw,24px);
+      font-size: 0.56rem; color: rgba(17,16,16,0.26); line-height: 1.7;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* ── Right column ── */
+    .pg2-right { padding: clamp(20px,3vw,38px) clamp(22px,3.5vw,44px); display: flex; flex-direction: column; overflow: hidden; }
+    .pg2-contrib-heading {
+      font-family: var(--disp); font-weight: 900; text-transform: uppercase;
+      letter-spacing: -0.025em; line-height: 0.88; color: var(--ink);
+      font-size: clamp(2.6rem, 6.8vw, 6rem); margin-bottom: clamp(18px,2.8vh,34px);
+    }
+    .pg2-contrib-list { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; }
+    .pg2-contrib-item {
+      display: flex; gap: 14px; align-items: center;
+      padding: clamp(9px,1.3vh,14px) 0; border-bottom: 1px solid var(--rule);
+    }
+    .pg2-contrib-item:last-child { border-bottom: none; }
+    .pg2-contrib-avatar {
+      width: clamp(42px,5vw,56px); height: clamp(42px,5vw,56px);
+      border-radius: 50%; overflow: hidden; flex-shrink: 0;
+      border: 1.5px solid rgba(17,16,16,0.1);
+    }
+    .pg2-contrib-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .pg2-contrib-name {
+      font-family: var(--disp); font-size: clamp(0.7rem,1vw,0.86rem);
+      font-weight: 700; color: var(--ink); margin-bottom: 3px; letter-spacing: 0.01em;
+    }
+    .pg2-contrib-bio { font-size: clamp(0.6rem,0.85vw,0.73rem); color: rgba(17,16,16,0.42); line-height: 1.45; font-style: italic; }
+
+    /* ══════════════════════════════════
+       PAGE 3 — PHOTO SPREAD (torn paper)
+    ══════════════════════════════════ */
+    #pg3 {
+      background: #080808;
+      display: flex; flex-direction: column;
+      padding-bottom: clamp(18px,2.8vh,30px);
+    }
+
+    /* Top section label */
+    .pg3-label {
+      flex-shrink: 0;
+      display: flex; align-items: center; gap: 10px;
+      padding: clamp(13px,1.9vh,20px) clamp(20px,3vw,36px);
+      font-family: var(--disp); font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .pg3-label::before {
+      content: ''; display: block;
+      width: 2px; height: 16px; flex-shrink: 0;
+      background: rgba(255,255,255,0.28);
+    }
+
+    /* Photo wrapper — takes up remaining space */
+    .pg3-photo-wrap {
+      flex: 1; min-height: 0;
+      position: relative;
+      margin: 0 clamp(14px,2.5vw,36px);
+      overflow: hidden;
+    }
+    .pg3-photo-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+
+    /* ── Torn paper edge at top ── */
+    .pg3-photo-wrap::before {
+      content: ''; pointer-events: none;
+      position: absolute; top: -1px; left: -1px; right: -1px;
+      height: clamp(52px, 9vh, 96px);
+      background: #F8F4EF;
+      z-index: 3;
+      clip-path: polygon(
+        0 0, 100% 0, 100% 38%,
+        96% 66%, 92% 42%, 88% 70%, 84% 46%, 80% 74%, 76% 50%,
+        72% 68%, 68% 44%, 64% 72%, 60% 46%, 56% 70%, 52% 44%,
+        48% 72%, 44% 48%, 40% 70%, 36% 44%, 32% 72%, 28% 48%,
+        24% 68%, 20% 44%, 16% 70%, 12% 46%, 8% 68%, 4% 44%,
+        0 62%
+      );
+    }
+
+    /* Handwritten note overlaid on photo */
+    .pg3-handwritten {
+      position: absolute; z-index: 4;
+      bottom: clamp(18px,3.5vh,38px); left: clamp(16px,3vw,32px);
+      font-family: var(--hand); font-size: clamp(0.9rem,1.8vw,1.25rem);
+      color: rgba(255,255,255,0.88); line-height: 1.65;
+      max-width: clamp(200px,42%,380px);
+      transform: rotate(-2.5deg);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+
+    /* Bottom caption */
+    .pg3-caption {
+      flex-shrink: 0;
+      padding: clamp(12px,1.8vh,20px) clamp(20px,3vw,36px) 0;
+      font-family: var(--dm); font-style: italic;
+      font-size: clamp(1.8rem,4.2vw,3.8rem);
+      color: var(--beige); line-height: 1; letter-spacing: -0.02em;
+    }
+
+    /* ══════════════════════════════════
+       PAGE 4 — DIAGONAL FEATURE
+    ══════════════════════════════════ */
+    #pg4 { background: var(--ink); display: grid; grid-template-columns: 58% 42%; }
+    .feat-img-col { position: relative; overflow: hidden; min-height: calc(100vh - 48px); }
+    .feat-img-col img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .feat-img-col::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--ink) 100%);
+      pointer-events: none;
+    }
+    /* Diagonal clip on the image column */
+    .feat-img-col { clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%); }
+    .feat-text-col {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(28px,5vw,60px) clamp(28px,5vw,56px) clamp(28px,5vw,60px) clamp(16px,2vw,28px);
+    }
+    .feat-kicker { font-family: var(--disp); font-size: 0.58rem; font-weight: 900; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+    .feat-hl { font-family: var(--dm); font-size: clamp(2.2rem,4.5vw,5rem); line-height: 0.95; color: #F8F4EF; letter-spacing: -0.025em; margin-bottom: 20px; }
+    .feat-hl em { font-style: italic; color: var(--gold); }
+    .feat-pull { font-family: var(--serif); font-style: italic; font-size: clamp(0.9rem,1.5vw,1.15rem); color: rgba(248,244,239,0.6); line-height: 1.7; margin-bottom: 28px; max-width: 34ch; }
+    .feat-pull::before { content: '\201C'; color: var(--gold); font-size: 1.6em; line-height: 0; vertical-align: -0.3em; }
+    .feat-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .feat-stat-box { border: 1px solid rgba(248,244,239,0.1); padding: 14px; }
+    .feat-stat-n { font-family: var(--dm); font-size: clamp(1.8rem,3vw,3rem); color: var(--gold); line-height: 1; }
+    .feat-stat-l { font-size: 0.7rem; color: rgba(248,244,239,0.35); margin-top: 4px; line-height: 1.4; }
+
+    /* ══════════════════════════════════
+       PAGE 5 — FILM + CONTACT SHEET
+    ══════════════════════════════════ */
+    #pg5 { background: #1A1A1A; display: flex; flex-direction: column; gap: 0; }
+    .film-hdr { padding: clamp(14px,2vh,22px) clamp(24px,5vw,60px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .film-title { font-family: var(--disp); font-size: 0.6rem; font-weight: 900; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .film-issue { font-family: var(--hand); font-size: 0.88rem; color: rgba(255,255,255,0.25); }
+
+    /* Film strip at top */
+    .film-strip {
+      background: #111; border-top: 3px solid #000; border-bottom: 3px solid #000;
+      padding: 8px 0; overflow: hidden; position: relative;
+    }
+    .film-strip-inner {
+      display: flex; gap: 3px; padding: 0 8px;
+    }
+    .film-hole { width: 10px; height: 10px; border-radius: 2px; background: #333; flex-shrink: 0; align-self: center; }
+    .film-thumb {
+      flex-shrink: 0; width: clamp(60px,8vw,100px); height: clamp(50px,7vw,80px);
+      overflow: hidden; position: relative;
+    }
+    .film-thumb img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1) saturate(0.8); }
+    .film-num { position: absolute; bottom: 2px; left: 4px; font-size: 0.55rem; color: rgba(255,255,255,0.5); font-family: monospace; }
+
+    /* Main contact grid */
+    .contact-grid {
+      flex: 1; display: grid; gap: 3px; padding: 3px;
+      grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr;
+    }
+    .cg-cell { position: relative; overflow: hidden; min-height: 120px; }
+    .cg-cell img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.08) saturate(0.85); transition: filter 0.4s; }
+    .cg-cell:hover img { filter: contrast(1.1) saturate(1); }
+    .cg-cell.main { grid-row: span 2; }
+    .cg-label {
+      position: absolute; bottom: 8px; left: 10px;
+      font-family: monospace; font-size: 0.65rem; color: rgba(255,255,255,0.55); letter-spacing: 0.08em;
+      background: rgba(0,0,0,0.5); padding: 2px 6px;
+    }
+    /* Gold accent cell */
+    .cg-cell.gold-cell {
+      background: var(--gold); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
+    }
+    .gold-ql { font-family: var(--dm); font-style: italic; font-size: clamp(1rem,1.8vw,1.4rem); color: #111; line-height: 1.45; margin-bottom: 8px; }
+    .gold-at { font-size: 0.68rem; color: rgba(17,16,16,0.5); letter-spacing: 0.1em; }
+
+    /* ══════════════════════════════════
+       PAGE 6 — BIRTHDAY BOARD
+    ══════════════════════════════════ */
+    #pg6 { background: var(--warm); display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr auto; }
+    .bd-hdr { grid-column: span 3; padding: clamp(18px,2.5vh,28px) clamp(24px,5vw,60px); border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; justify-content: space-between; }
+    .bd-hl { font-family: var(--dm); font-size: clamp(2rem,4vw,4rem); color: var(--ink); letter-spacing: -0.025em; line-height: 1; }
+    .bd-hl em { font-style: italic; color: var(--red); }
+    .bd-sub { font-family: var(--serif); font-style: italic; font-size: 0.82rem; color: rgba(17,16,16,0.4); }
+
+    /* Left col — circle photo + awards */
+    .bd-col1 { padding: clamp(18px,2.5vw,32px) clamp(16px,2vw,24px) clamp(18px,2.5vw,32px) clamp(24px,5vw,60px); border-right: 1px solid var(--rule); display: flex; flex-direction: column; gap: 20px; }
+    .bd-circle-wrap { display: flex; justify-content: center; }
+    .bd-circle { width: clamp(120px,14vw,180px); height: clamp(120px,14vw,180px); border-radius: 50%; overflow: hidden; border: 4px solid var(--gold); box-shadow: 0 0 0 8px rgba(184,134,11,0.12); }
+    .bd-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .award-lbl { font-family: var(--disp); font-size: 0.58rem; font-weight: 900; letter-spacing: 0.28em; text-transform: uppercase; color: var(--red); border-bottom: 1px solid var(--rule); padding-bottom: 8px; margin-bottom: 12px; }
+    .award-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 11px; }
+    .award-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .award-txt strong { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink); }
+    .award-txt span   { font-size: 0.7rem; color: rgba(17,16,16,0.45); line-height: 1.4; }
+
+    /* Middle col — stats + horoscope */
+    .bd-col2 { padding: clamp(18px,2.5vw,32px) clamp(16px,2vw,24px); border-right: 1px solid var(--rule); display: flex; flex-direction: column; gap: 16px; }
+    .bd-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .bd-stat { background: var(--ink); padding: 16px 14px; }
+    .bd-stat-n { font-family: var(--dm); font-size: clamp(1.8rem,2.8vw,2.8rem); color: var(--gold); line-height: 1; }
+    .bd-stat-l { font-size: 0.66rem; color: rgba(248,244,239,0.45); margin-top: 4px; line-height: 1.4; }
+    .horo { background: var(--warm3); padding: 16px; }
+    .horo-lbl { font-family: var(--disp); font-size: 0.56rem; font-weight: 900; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+    .horo-sign { font-family: var(--dm); font-size: clamp(1.1rem,1.8vw,1.6rem); color: var(--ink); margin-bottom: 6px; }
+    .horo-text { font-size: 0.76rem; color: rgba(17,16,16,0.6); line-height: 1.65; }
+
+    /* Right col — predictions + closing */
+    .bd-col3 { padding: clamp(18px,2.5vw,32px) clamp(24px,5vw,60px) clamp(18px,2.5vw,32px) clamp(16px,2vw,24px); display: flex; flex-direction: column; gap: 16px; }
+    .pred-lbl { font-family: var(--disp); font-size: 0.58rem; font-weight: 900; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--rule); padding-bottom: 8px; margin-bottom: 12px; }
+    .pred-row { font-size: 0.8rem; color: rgba(17,16,16,0.65); line-height: 1.55; padding: 8px 0; border-bottom: 1px solid rgba(17,16,16,0.06); display: flex; gap: 8px; }
+    .pred-row::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+    .bd-closing { background: var(--ink); padding: 18px; margin-top: auto; }
+    .bd-closing-q { font-family: var(--serif); font-style: italic; font-size: clamp(0.82rem,1.3vw,0.95rem); color: rgba(248,244,239,0.8); line-height: 1.7; margin-bottom: 10px; }
+    .bd-closing-a { font-size: 0.66rem; color: rgba(248,244,239,0.3); letter-spacing: 0.12em; }
+
+    .bd-ftr { grid-column: span 3; padding: clamp(10px,1.5vh,16px) clamp(24px,5vw,60px); border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+    .bd-ftr-q { font-family: var(--serif); font-style: italic; font-size: 0.88rem; color: rgba(17,16,16,0.55); }
+    .bd-ftr-logo { font-family: var(--disp); font-size: 0.6rem; font-weight: 900; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(17,16,16,0.22); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      /* Cover */
+      .cov-masthead-big { font-size: clamp(3rem, 18vw, 5rem); }
+      .cov-teasers { display: none; }
+
+      /* Contributors */
+      #pg2 { grid-template-columns: 1fr; overflow-y: auto; }
+      .pg2-group-photo { height: 30vh; }
+      .pg2-credits { padding: 14px 16px 0; }
+      .pg2-right { padding: 18px 16px; }
+      .pg2-contrib-heading { font-size: clamp(2rem, 10vw, 3rem); margin-bottom: 14px; }
+
+      /* Photo spread */
+      .pg3-handwritten { font-size: 0.82rem; max-width: 65%; }
+      .pg3-caption { font-size: 1.6rem; }
+
+      /* Other pages */
+      #pg4 { grid-template-columns: 1fr; }
+      .feat-img-col { clip-path: none; height: 40vh; }
+      #pg6 { grid-template-columns: 1fr; }
+      .bd-hdr, .bd-ftr { grid-column: span 1; }
+      .bd-col1, .bd-col2, .bd-col3 { border: none; }
+      #pg5 .contact-grid { grid-template-columns: 1fr 1fr; }
+      .cg-cell.main { grid-row: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="mag-nav">
+  <a href="samik-birthday-wrap.html">← Back to The Wrap</a>
+  <span class="mag-masthead">The Wrap · Magazine</span>
+  <span class="mag-issue">Birthday Edition · Feb 2026</span>
+</nav>
+
+<button class="page-prev hidden" aria-label="Previous page">&#8592;</button>
+<button class="page-next" aria-label="Next page">&#8594;</button>
+<div class="page-counter">1 / 6</div>
+
+<div class="page-dots">
+  <button class="page-dot on"  data-pg="pg1" title="Cover"></button>
+  <button class="page-dot"     data-pg="pg2" title="Polaroids"></button>
+  <button class="page-dot"     data-pg="pg3" title="Gallery"></button>
+  <button class="page-dot"     data-pg="pg4" title="Feature"></button>
+  <button class="page-dot"     data-pg="pg5" title="Film"></button>
+  <button class="page-dot"     data-pg="pg6" title="Birthday Board"></button>
+</div>
+
+<div class="mag-pages">
+
+<!-- ══════════ PAGE 1 · COVER — Full-bleed editorial ══════════ -->
+<section class="page" id="pg1">
+
+  <!-- Full-bleed background photo -->
+  <div class="cov-bg">
+    <!-- REPLACE with Samik's portrait photo -->
+    <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=1200&h=1600" alt="Birthday cover portrait" fetchpriority="high" decoding="async">
+  </div>
+
+  <!-- Tiny issue bar -->
+  <div class="cov-topbar">
+    <span>Issue No. 1 &nbsp;·&nbsp; Birthday Edition</span>
+    <span>Feb 2026 &nbsp;·&nbsp; Vol. I</span>
+  </div>
+
+  <!-- Large outlined masthead -->
+  <div class="cov-masthead-big">THE<br>WRAP</div>
+
+  <!-- Left editorial teasers -->
+  <div class="cov-teasers">
+    <div class="cov-teaser">
+      <div class="cov-teaser-lbl">Main Character</div>
+      <div class="cov-teaser-txt">10 eras, one legendary arc — the full retrospective</div>
+    </div>
+    <div class="cov-teaser">
+      <div class="cov-teaser-lbl">Our Time Is Now</div>
+      <div class="cov-teaser-txt">The real story behind the +47 minutes, always</div>
+    </div>
+  </div>
+
+  <!-- Bottom: subject name + tagline -->
+  <div class="cov-bottom">
+    <div class="cov-name">Samik<br>Ghosh</div>
+    <div class="cov-tagline">The Definitive Birthday Retrospective &nbsp;·&nbsp; Read Inside</div>
+  </div>
+
+</section>
+
+<!-- ══════════ PAGE 2 · CONTRIBUTORS ══════════ -->
+<section class="page" id="pg2">
+
+  <!-- Left column: group photo + masthead credits -->
+  <div class="pg2-left">
+
+    <div class="pg2-group-photo">
+      <!-- REPLACE with a group photo of Samik and friends -->
+      <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&h=500" alt="The crew" loading="lazy" decoding="async">
+    </div>
+
+    <div class="pg2-credits">
+      <div class="pg2-credit-item">
+        <div class="pg2-credit-role">Editor-in-Chief</div>
+        <div class="pg2-credit-name">Your Name Here</div>
+      </div>
+      <div class="pg2-credit-item">
+        <div class="pg2-credit-role">Managing Editor</div>
+        <div class="pg2-credit-name">Friend Name Here</div>
+      </div>
+      <div class="pg2-credit-item">
+        <div class="pg2-credit-role">Creative Director</div>
+        <div class="pg2-credit-name">Friend Name Here</div>
+      </div>
+      <div class="pg2-credit-item">
+        <div class="pg2-credit-role">Chief Correspondent</div>
+        <div class="pg2-credit-name">Friend Name Here</div>
+      </div>
+      <div class="pg2-credit-item">
+        <div class="pg2-credit-role">Photographers</div>
+        <div class="pg2-credit-name">Friend One, Friend Two, Friend Three</div>
+      </div>
+    </div>
+
+    <div class="pg2-address">
+      The Wrap Magazine &nbsp;·&nbsp; Birthday Edition 2026<br>
+      Published with love, zero budget, infinite chaos<br>
+      thewrap@samikbirthday.com
+    </div>
+
+  </div>
+
+  <!-- Right column: CONTRIBUTORS heading + contributor cards -->
+  <div class="pg2-right">
+
+    <div class="pg2-contrib-heading">CONTRI<br>BUTORS</div>
+
+    <div class="pg2-contrib-list">
+
+      <div class="pg2-contrib-item">
+        <div class="pg2-contrib-avatar">
+          <!-- REPLACE with friend's photo -->
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120" alt="Contributor 1" loading="lazy" decoding="async">
+        </div>
+        <div>
+          <div class="pg2-contrib-name">Friend Name</div>
+          <div class="pg2-contrib-bio">The one who always had a plan. And a backup plan. And a backup for that.</div>
+        </div>
+      </div>
+
+      <div class="pg2-contrib-item">
+        <div class="pg2-contrib-avatar">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120" alt="Contributor 2" loading="lazy" decoding="async">
+        </div>
+        <div>
+          <div class="pg2-contrib-name">Friend Name</div>
+          <div class="pg2-contrib-bio">Arrived +47 minutes late to every brainstorm. Still had the best ideas every time.</div>
+        </div>
+      </div>
+
+      <div class="pg2-contrib-item">
+        <div class="pg2-contrib-avatar">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=120&h=120" alt="Contributor 3" loading="lazy" decoding="async">
+        </div>
+        <div>
+          <div class="pg2-contrib-name">Friend Name</div>
+          <div class="pg2-contrib-bio">Responsible for at least 60% of all group chat chaos. Zero regrets. Proud of it.</div>
+        </div>
+      </div>
+
+      <div class="pg2-contrib-item">
+        <div class="pg2-contrib-avatar">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120" alt="Contributor 4" loading="lazy" decoding="async">
+        </div>
+        <div>
+          <div class="pg2-contrib-name">Friend Name</div>
+          <div class="pg2-contrib-bio">Said "bro trust me" once. It worked. Has never let anyone forget it since.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════ PAGE 3 · PHOTO SPREAD ══════════ -->
+<section class="page" id="pg3">
+
+  <!-- Section label -->
+  <div class="pg3-label">20 – 40 Photos</div>
+
+  <!-- Full photo with torn paper top edge -->
+  <div class="pg3-photo-wrap">
+    <!-- REPLACE with your favourite group photo of Samik -->
+    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&h=900" alt="A trillion smiles" loading="lazy" decoding="async">
+
+    <!-- Handwritten message overlaid on photo -->
+    <div class="pg3-handwritten">
+      to my ride or die<br>
+      (literally smile, grace, always shining)<br>
+      Happy Birthday! 🎂
+    </div>
+  </div>
+
+  <!-- Bottom caption -->
+  <div class="pg3-caption">a trillion smiles</div>
+
+</section>
+
+<!-- ══════════ PAGE 4 · DIAGONAL FEATURE ══════════ -->
+<section class="page" id="pg4">
+
+  <div class="feat-img-col">
+    <!-- REPLACE with Samik's photo -->
+    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&h=1200" alt="Feature portrait" loading="lazy" decoding="async">
+  </div>
+
+  <div class="feat-text-col">
+    <div class="feat-kicker">Cover Story &nbsp;·&nbsp; Birthday 2026</div>
+    <h2 class="feat-hl">The<br><em>Samik</em><br>Effect.</h2>
+    <p class="feat-pull">He didn&rsquo;t just show up late. He showed up like he&rsquo;d been there the whole time.</p>
+    <div class="feat-stats">
+      <div class="feat-stat-box"><div class="feat-stat-n">99%</div><div class="feat-stat-l">Main character energy</div></div>
+      <div class="feat-stat-box"><div class="feat-stat-n">+47</div><div class="feat-stat-l">Minutes late, always</div></div>
+      <div class="feat-stat-box"><div class="feat-stat-n">∞</div><div class="feat-stat-l">Bro trust me's</div></div>
+      <div class="feat-stat-box"><div class="feat-stat-n">10</div><div class="feat-stat-l">Eras unlocked</div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════ PAGE 5 · FILM STRIP + CONTACT SHEET ══════════ -->
+<section class="page" id="pg5">
+
+  <div class="film-hdr">
+    <span class="film-title">Contact Sheet &nbsp;·&nbsp; The Archive &nbsp;·&nbsp; 2026</span>
+    <span class="film-issue">roll 01 / samik the wrap</span>
+  </div>
+
+  <!-- Film strip -->
+  <div class="film-strip">
+    <div class="film-strip-inner">
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=120&h=90" alt="01" loading="lazy" decoding="async"><div class="film-num">01</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=120&h=90" alt="02" loading="lazy" decoding="async"><div class="film-num">02</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=120&h=90" alt="03" loading="lazy" decoding="async"><div class="film-num">03</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=120&h=90" alt="04" loading="lazy" decoding="async"><div class="film-num">04</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=120&h=90" alt="05" loading="lazy" decoding="async"><div class="film-num">05</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=120&h=90" alt="06" loading="lazy" decoding="async"><div class="film-num">06</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1543083115-638c32cd3d58?auto=format&fit=crop&w=120&h=90" alt="07" loading="lazy" decoding="async"><div class="film-num">07</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=90" alt="08" loading="lazy" decoding="async"><div class="film-num">08</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=90" alt="09" loading="lazy" decoding="async"><div class="film-num">09</div></div>
+      <div class="film-hole"></div>
+      <div class="film-thumb"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=120&h=90" alt="10" loading="lazy" decoding="async"><div class="film-num">10</div></div>
+      <div class="film-hole"></div>
+    </div>
+  </div>
+
+  <!-- Contact sheet grid -->
+  <div class="contact-grid">
+
+    <div class="cg-cell main">
+      <img src="https://images.unsplash.com/photo-1543083115-638c32cd3d58?auto=format&fit=crop&w=700&h=900" alt="Main" loading="lazy" decoding="async">
+      <div class="cg-label">samik_arc_001.jpg</div>
+    </div>
+
+    <div class="cg-cell">
+      <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=300" alt="Frame 02" loading="lazy" decoding="async">
+      <div class="cg-label">samik_arc_002.jpg</div>
+    </div>
+
+    <!-- Gold quote cell -->
+    <div class="cg-cell gold-cell">
+      <p class="gold-ql">&ldquo;Another year added. Same Samik. More legendary.&rdquo;</p>
+      <span class="gold-at">— The Wrap, 2026</span>
+    </div>
+
+    <div class="cg-cell">
+      <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=400&h=300" alt="Frame 04" loading="lazy" decoding="async">
+      <div class="cg-label">samik_arc_004.jpg</div>
+    </div>
+
+    <div class="cg-cell">
+      <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=400&h=300" alt="Frame 05" loading="lazy" decoding="async">
+      <div class="cg-label">samik_arc_005.jpg</div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ══════════ PAGE 6 · BIRTHDAY BOARD ══════════ -->
+<section class="page" id="pg6">
+
+  <div class="bd-hdr">
+    <h2 class="bd-hl">The Birthday <em>Board.</em></h2>
+    <span class="bd-sub">Awards · Predictions · 2026</span>
+  </div>
+
+  <!-- Left: circular photo + awards -->
+  <div class="bd-col1">
+    <div class="bd-circle-wrap">
+      <div class="bd-circle">
+        <!-- REPLACE with Samik's photo -->
+        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=300&h=300" alt="Portrait" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div>
+      <div class="award-lbl">🏆 The Samik Awards 2026</div>
+      <div class="award-row"><span class="award-icon">🥇</span><div class="award-txt"><strong>Most Consistent Late Arrival</strong><span>47 minutes, every single time. An unbroken record.</span></div></div>
+      <div class="award-row"><span class="award-icon">🎭</span><div class="award-txt"><strong>Best Bro Trust Me Deployment</strong><span>Convinced everyone, always, despite all evidence.</span></div></div>
+      <div class="award-row"><span class="award-icon">🌟</span><div class="award-txt"><strong>Lifetime: Main Character Energy</strong><span>99% sustained across all documented eras.</span></div></div>
+      <div class="award-row"><span class="award-icon">💬</span><div class="award-txt"><strong>Group Chat MVP</strong><span>Most debates started. Most screenshots won.</span></div></div>
+    </div>
+  </div>
+
+  <!-- Middle: stats + horoscope -->
+  <div class="bd-col2">
+    <div class="bd-stats-grid">
+      <div class="bd-stat"><div class="bd-stat-n">99%</div><div class="bd-stat-l">Main character rating</div></div>
+      <div class="bd-stat"><div class="bd-stat-n">+47</div><div class="bd-stat-l">Minutes late, always</div></div>
+      <div class="bd-stat"><div class="bd-stat-n">∞</div><div class="bd-stat-l">Trust me's deployed</div></div>
+      <div class="bd-stat"><div class="bd-stat-n">0</div><div class="bd-stat-l">On-time arrivals ever</div></div>
+    </div>
+    <div class="horo">
+      <div class="horo-lbl">Birthday Horoscope · 2026</div>
+      <div class="horo-sign">Samik · Class of Legendary</div>
+      <p class="horo-text">The stars confirm: another year of astronomical confidence, questionable punctuality, and an unbroken record of somehow being right. Lean in. The chaos is written in your chart.</p>
+    </div>
+  </div>
+
+  <!-- Right: predictions + closing -->
+  <div class="bd-col3">
+    <div>
+      <div class="pred-lbl">🔮 Predictions for the Year Ahead</div>
+      <div class="pred-row">Will be 47+ minutes late to his own next birthday</div>
+      <div class="pred-row">Will deploy "Bro trust me" 40+ more times — it'll work</div>
+      <div class="pred-row">Will be undeniably right at the worst possible moment</div>
+      <div class="pred-row">Will arrive "in 5 mins" for approximately 50 minutes</div>
+    </div>
+    <div class="bd-closing">
+      <p class="bd-closing-q">&ldquo;Funny. Sharp. Loyal. Unforgettable. The world&rsquo;s genuinely a better place with you in it. Keep being exactly you. Happy Birthday — for real this time.&rdquo;</p>
+      <span class="bd-closing-a">— The Wrap Editorial, 2026</span>
+    </div>
+  </div>
+
+  <div class="bd-ftr">
+    <p class="bd-ftr-q">&ldquo;Stay iconic. Try being on time once.&rdquo;</p>
+    <span class="bd-ftr-logo">The Wrap Magazine &nbsp;·&nbsp; 2026</span>
+  </div>
+
+</section>
+
+</div><!-- /.mag-pages -->
+
+<script>
+  const pagesEl  = document.querySelector('.mag-pages');
+  const pages    = [...document.querySelectorAll('.page')];
+  const dots     = [...document.querySelectorAll('.page-dot')];
+  const prevBtn  = document.querySelector('.page-prev');
+  const nextBtn  = document.querySelector('.page-next');
+  const counter  = document.querySelector('.page-counter');
+
+  let cur = 0;
+
+  /* ── Navigate to a page index ── */
+  function goTo(idx) {
+    idx = Math.max(0, Math.min(pages.length - 1, idx));
+    pagesEl.scrollTo({ left: idx * window.innerWidth, behavior: 'smooth' });
+  }
+
+  /* ── Sync UI to current page ── */
+  function updateUI(idx) {
+    cur = idx;
+    dots.forEach((d, j) => d.classList.toggle('on', j === idx));
+    prevBtn.classList.toggle('hidden', idx === 0);
+    nextBtn.classList.toggle('hidden', idx === pages.length - 1);
+    counter.textContent = `${idx + 1} / ${pages.length}`;
+    document.body.classList.toggle('on-cover', idx === 0);
+  }
+
+  /* ── Dot clicks ── */
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  /* ── Arrow button clicks ── */
+  prevBtn.addEventListener('click', () => goTo(cur - 1));
+  nextBtn.addEventListener('click', () => goTo(cur + 1));
+
+  /* ── Keyboard navigation ── */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goTo(cur + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); goTo(cur - 1); }
+  });
+
+  /* ── Mouse-wheel → horizontal page turn ── */
+  pagesEl.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (e.deltaY > 15 || e.deltaX > 15)  goTo(cur + 1);
+    if (e.deltaY < -15 || e.deltaX < -15) goTo(cur - 1);
+  }, { passive: false });
+
+  /* ── Sync dots/counter on scroll (handles touch swipe too) ── */
+  let scrollTimer;
+  pagesEl.addEventListener('scroll', () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const idx = Math.round(pagesEl.scrollLeft / window.innerWidth);
+      updateUI(idx);
+    }, 40);
+  });
+
+  /* ── GSAP entrance animations ── */
+  const seen = new Set();
+  const animObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting || seen.has(e.target.id)) return;
+      seen.add(e.target.id);
+      const id = e.target.id;
+
+      if (id === 'pg1') {
+        gsap.from('.cov-masthead-big', { opacity:0, y:-30, duration:1.0, ease:'power3.out' });
+        gsap.from('.cov-teaser',       { opacity:0, x:-20, duration:0.6, stagger:0.15, delay:0.4, ease:'power2.out' });
+        gsap.from('.cov-name',         { opacity:0, y:40, duration:0.9, delay:0.5, ease:'power3.out' });
+        gsap.from('.cov-tagline',      { opacity:0, duration:0.6, delay:1.0 });
+      }
+      if (id === 'pg2') {
+        gsap.from('.pg2-group-photo img',  { scale:1.06, duration:1.1, ease:'power2.out' });
+        gsap.from('.pg2-credit-item',      { opacity:0, x:-12, duration:0.5, stagger:0.08, delay:0.3, ease:'power2.out' });
+        gsap.from('.pg2-contrib-heading',  { opacity:0, y:24, duration:0.8, delay:0.2, ease:'power3.out' });
+        gsap.from('.pg2-contrib-item',     { opacity:0, x:16, duration:0.5, stagger:0.1, delay:0.5, ease:'power2.out' });
+      }
+      if (id === 'pg3') {
+        gsap.from('.pg3-photo-wrap img',  { scale:1.04, duration:1.2, ease:'power2.out' });
+        gsap.from('.pg3-label',           { opacity:0, x:-16, duration:0.5, delay:0.1 });
+        gsap.from('.pg3-handwritten',     { opacity:0, y:20, duration:0.8, delay:0.6, ease:'power2.out' });
+        gsap.from('.pg3-caption',         { opacity:0, y:18, duration:0.7, delay:0.4, ease:'power3.out' });
+      }
+      if (id === 'pg4') {
+        gsap.from('.feat-img-col img', { scale:1.08, duration:1.3, ease:'power2.out' });
+        gsap.from('.feat-kicker',      { opacity:0, y:12, duration:0.5, delay:0.4 });
+        gsap.from('.feat-hl',          { opacity:0, y:30, duration:0.8, delay:0.55, ease:'power3.out' });
+        gsap.from('.feat-stat-box',    { opacity:0, y:16, duration:0.5, stagger:0.08, delay:0.9 });
+      }
+      if (id === 'pg5') {
+        gsap.from('.film-strip-inner', { x:-60, opacity:0, duration:0.8, delay:0.2, ease:'power2.out' });
+        gsap.from('.cg-cell',          { opacity:0, scale:0.95, duration:0.6, stagger:0.1, delay:0.5, ease:'power2.out' });
+      }
+      if (id === 'pg6') {
+        gsap.from('.bd-hl',       { opacity:0, y:24, duration:0.7, delay:0.1, ease:'power3.out' });
+        gsap.from('.bd-circle',   { opacity:0, scale:0.8, duration:0.7, delay:0.3, ease:'back.out(1.5)' });
+        gsap.from('.award-row',   { opacity:0, x:-14, duration:0.5, stagger:0.1, delay:0.5 });
+        gsap.from('.bd-stat',     { opacity:0, scale:0.9, duration:0.5, stagger:0.08, delay:0.55, ease:'back.out(1.4)' });
+        gsap.from('.pred-row',    { opacity:0, x:14, duration:0.4, stagger:0.08, delay:0.7 });
+      }
+    });
+  }, { root: pagesEl, threshold: 0.5 });
+  pages.forEach(p => animObs.observe(p));
+
+  /* ── Init ── */
+  updateUI(0);
+  // Trigger pg1 animations immediately on load
+  seen.add('pg1');
+  gsap.from('.cov-masthead-big', { opacity:0, y:-30, duration:1.0, ease:'power3.out' });
+  gsap.from('.cov-teaser',       { opacity:0, x:-20, duration:0.6, stagger:0.15, delay:0.4, ease:'power2.out' });
+  gsap.from('.cov-name',         { opacity:0, y:40, duration:0.9, delay:0.5, ease:'power3.out' });
+  gsap.from('.cov-tagline',      { opacity:0, duration:0.6, delay:1.0 });
+</script>
+</body>
+</html>
