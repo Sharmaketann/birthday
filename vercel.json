@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/samik-birthday-wrap.html" }
+  ]
+}
