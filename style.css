@@ -210,6 +210,11 @@
     #vol-btn.show { opacity:1; pointer-events:auto; }
     #vol-btn:hover { border-color:rgba(243,238,229,.3); color:var(--cream); }
 
+    /* ══ MAGAZINE NAV BTN ══ */
+    #nav-mag-btn { position:fixed; top:20px; right:72px; z-index:200; height:44px; border-radius:22px; border:1px solid var(--divider); background:rgba(14,42,43,.88); backdrop-filter:blur(10px); color:var(--cream-muted); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; padding:0 14px; font-family:'Montserrat',sans-serif; font-size:0.62rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; white-space:nowrap; transition:all .2s ease-out; opacity:0; pointer-events:none; }
+    #nav-mag-btn.show { opacity:1; pointer-events:auto; }
+    #nav-mag-btn:hover { border-color:rgba(168,214,114,.5); color:#A8D672; background:rgba(14,42,43,.96); }
+
     /* ══ CONFETTI ══ */
     #confetti-canvas { position:fixed; inset:0; pointer-events:none; z-index:150; opacity:0; transition:opacity .5s ease-out; }
     #confetti-canvas.on { opacity:1; }

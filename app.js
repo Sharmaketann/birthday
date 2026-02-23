@@ -630,6 +630,7 @@ document.getElementById('start-btn').addEventListener('click',()=>{
   if(ambient){ try{ ambient.stop(); }catch(e){} }
   ambient=new AmbientLoop(); ambient.start();
   document.getElementById('vol-btn').classList.add('show');
+  document.getElementById('nav-mag-btn').classList.add('show');
   goTo(2);
 });
 
