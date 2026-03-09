@@ -470,9 +470,12 @@ function celebrate() {
   // Bounce share card in
   const card = document.getElementById('share-card-el');
   gsap.fromTo(card, { scale:0.88, opacity:0 }, { scale:1, opacity:1, duration:0.6*D, ease:'back.out(1.5)' });
-  // Stagger action buttons
+  // Stagger action buttons — explicitly enable pointer-events on complete
   const btns = document.querySelectorAll('.share-actions button');
-  gsap.fromTo(btns, { opacity:0, y:18 }, { opacity:1, y:0, duration:0.4*D, stagger:0.08*D, delay:0.3*D, ease:'power2.out' });
+  gsap.set(btns, { pointerEvents:'none' });
+  gsap.fromTo(btns, { opacity:0, y:18 }, { opacity:1, y:0, duration:0.4*D, stagger:0.08*D, delay:0.3*D, ease:'power2.out',
+    onComplete() { btns.forEach(b => b.style.pointerEvents = 'auto'); }
+  });
 }
 
 // Confetti
@@ -525,7 +528,7 @@ document.getElementById('dl-btn').addEventListener('click',()=>{
   x.fillStyle='#43BFB2'; x.beginPath(); x.roundRect?x.roundRect(240,76,240,38,19):x.rect(240,76,240,38); x.fill();
   x.fillStyle='#071B1C'; x.font='bold 13px sans-serif'; x.textAlign='center'; x.fillText('✦  CERTIFIED LEGEND',360,101);
   // Name
-  x.fillStyle='#F3EEE5'; x.font='900 92px sans-serif'; x.fillText('SAMIK',360,230);
+  x.fillStyle='#F3EEE5'; x.font='900 92px sans-serif'; x.fillText('BOCHYA',360,230);
   // Sub
   x.fillStyle='#43BFB2'; x.font='600 19px sans-serif'; x.fillText('Class of Legendary · 2026 Edition',360,266);
   // Line
