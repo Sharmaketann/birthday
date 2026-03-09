@@ -6,16 +6,16 @@ gsap.defaults({ ease: 'power2.out', overwrite: 'auto' });
 // DATA
 // ═══════════════════════════════════════════════════════════════
 const MEMORIES = [
-  { hl:'THE ORIGIN PATCH',          txt:'Small human. Huge opinions. Zero fear.',                                era:'The Origin',         img:'https://i.imgflip.com/23ls.jpg',    alt:'Disaster Girl meme',             sfx:'softPop'     },
-  { hl:'THE CLASSROOM ARC',         txt:'Answered questions you weren\'t asked. Still somehow iconic.',         era:'The School Days',     img:'https://i.imgflip.com/1h7in3.jpg',  alt:'Roll Safe Think About It meme',  sfx:'bellTap'     },
-  { hl:'THE CONFIDENCE UPDATE',     txt:'Confidence unlocked. Decision-making optional.',                       era:'The Glow-Up',         img:'https://i.imgflip.com/39t1o.jpg',   alt:'Leonardo DiCaprio Cheers meme',  sfx:'recordScratch'},
-  { hl:'THE CHAOS DEGREE',          txt:'Survived exams and vibes. Mostly vibes.',                             era:'The Degree Years',    img:'https://i.imgflip.com/wxica.jpg',   alt:'This Is Fine meme',              sfx:'crowdCheer'  },
-  { hl:'THE FIRST BIG WIN',         txt:'That one win you still mention. Valid.',                              era:'The Victory Lap',     img:'https://i.imgflip.com/1bhk.jpg',    alt:'Success Kid meme',               sfx:'trophyDing'  },
-  { hl:'THE GROUP CHAT LORE',       txt:'Started debates. Won screenshots. Disappeared when accountability loaded.', era:'The Social Era', img:'https://i.imgflip.com/2gnnjh.jpg',  alt:'Monkey Puppet meme',             sfx:'notifPing'   },
-  { hl:"THE 'TOUCHED GRASS' DLC",   txt:'Went outside. Documented it like a celebrity.',                       era:'The Great Outdoors',  img:'https://i.imgflip.com/1o00in.jpg',  alt:'Is This A Pigeon meme',          sfx:'cameraClick' },
-  { hl:'THE MEME PRIME',            txt:'Delivered memes on time. Unlike everything else.',                    era:'The Content Era',     img:'https://i.imgflip.com/1jwhww.jpg',  alt:'Expanding Brain meme',           sfx:'bassBoom'    },
-  { hl:'THE GLOW-UP PATCH',         txt:'Upgrades installed. Personality remains undefeated.',                 era:'The Upgrade',         img:'https://i.imgflip.com/43a45p.png',  alt:'Buff Doge vs Cheems meme',       sfx:'risingChime' },
-  { hl:'TODAY: LEVEL UP',           txt:'Another year added. Same Bochya. More legendary.',                    era:'Right Now',           img:'https://i.imgflip.com/gtj5t.jpg',   alt:'Oprah You Get A meme',           sfx:'confettiPop' },
+  { hl:'BACHPAN KA SWAG',           txt:'Chhota sa filter, bada sa attitude. Yeh sab shuruaat thi.',           era:'The Origin',          img:'photos/bochya-puppy.jpeg',      alt:'Bochya puppy filter',     sfx:'softPop'      },
+  { hl:'PADHAI LESS, VIBE MORE',    txt:'Sunglasses on, lectures off. Front bench sirf swag ke liye.',         era:'The School Days',      img:'photos/bochya-sunglasses.jpeg', alt:'Bochya sunglasses',       sfx:'bellTap'      },
+  { hl:'GLOW UP LOADED ✨',         txt:'Jab upgrades install hue toh sab ne dekha. GPU bhi hang ho gaya.',    era:'The Glow-Up',          img:'photos/bochya-cover.jpeg',      alt:'Bochya portrait',         sfx:'recordScratch'},
+  { hl:'FUNCTION MODE: ON 🎉',      txt:'Exams nahi, functions mein result aata hai. Always ready.',           era:'The Degree Years',     img:'photos/bochya-anarkali.jpeg',   alt:'Bochya in anarkali',      sfx:'crowdCheer'   },
+  { hl:'PARTNERS IN CRIME 🔴',      txt:'Dono ne plan banaya, dono ne execute kiya, dono ne deny kiya.',       era:'The Victory Lap',      img:'photos/bochya-partners.jpeg',   alt:'Partners in crime',       sfx:'trophyDing'   },
+  { hl:'GANG TRIP CONFIRMED 🏔️',    txt:'Pahadon pe chali, photos bhi aaye, wahaan bhi full filmy scene.',     era:'The Social Era',       img:'photos/bochya-group.jpeg',      alt:'Bochya with friends',     sfx:'notifPing'    },
+  { hl:'GHUMNA ZAROORI HAI 🎬',     txt:'Ghumna tha, ghumaai, video bhi banaya. Main character energy 100%.',  era:'The Great Outdoors',   vid:'photos/bochya-video2.mp4',      alt:'Bochya video',            sfx:'cameraClick'  },
+  { hl:'FILTER QUEEN ERA 🐾',       txt:'Har filter try kiya. Puppy wala best lagaa. Obviously toh hoga.',     era:'The Content Era',      img:'photos/bochya-puppy.jpeg',      alt:'Bochya puppy filter',     sfx:'bassBoom'     },
+  { hl:'FINAL FORM UNLOCKED 👑',    txt:'Portrait mode on, attitude max, zero edits needed. Sach mein.',       era:'The Upgrade',          vid:'photos/bochya.mp4',             alt:'Bochya video',            sfx:'risingChime'  },
+  { hl:'AAJ KA DIN, TERA DIN 🎂',   txt:'Another year added. Same Bochya. More legendary. Happy Birthday!',   era:'Right Now',            img:'photos/bochya-anarkali.jpeg',   alt:'Bochya in anarkali',      sfx:'confettiPop'  },
 ];
 
 const MEMES = [
@@ -383,11 +383,24 @@ function showMem(idx) {
     gsap.fromTo([hl,txt], { opacity:0, y:12 }, { opacity:1, y:0, duration:0.38*D, ease:'power2.out', stagger:0.08*D });
   }});
   const img=document.getElementById('mem-img');
-  gsap.to(img, { opacity:0, duration:0.3*D, ease:'power2.in', onComplete(){
-    img.src=m.img; img.alt=m.alt;
-    img.onload=()=>gsap.to(img, { opacity:1, duration:0.5*D });
-    img.onerror=()=>gsap.set(img, { opacity:0 });
-  }});
+  const vid=document.getElementById('mem-vid');
+  const isVid=!!m.vid;
+  if(isVid){
+    img.style.display='none';
+    vid.style.display='block';
+    gsap.to(vid, { opacity:0, duration:0.3*D, ease:'power2.in', onComplete(){
+      vid.src=m.vid; vid.alt=m.alt; vid.load(); vid.play().catch(()=>{});
+      gsap.to(vid, { opacity:1, duration:0.5*D });
+    }});
+  } else {
+    vid.pause(); vid.style.display='none';
+    img.style.display='block';
+    gsap.to(img, { opacity:0, duration:0.3*D, ease:'power2.in', onComplete(){
+      img.src=m.img; img.alt=m.alt;
+      img.onload=()=>gsap.to(img, { opacity:1, duration:0.5*D });
+      img.onerror=()=>gsap.set(img, { opacity:0 });
+    }});
+  }
   document.querySelectorAll('.tdot').forEach((d,i)=>{ d.classList.remove('on','done'); if(i<idx)d.classList.add('done'); else if(i===idx)d.classList.add('on'); });
   // Show/hide nav arrows based on position
   const prevBtn=document.getElementById('mem-prev');
