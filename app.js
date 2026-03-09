@@ -15,7 +15,7 @@ const MEMORIES = [
   { hl:"THE 'TOUCHED GRASS' DLC",   txt:'Went outside. Documented it like a celebrity.',                       era:'The Great Outdoors',  img:'https://i.imgflip.com/1o00in.jpg',  alt:'Is This A Pigeon meme',          sfx:'cameraClick' },
   { hl:'THE MEME PRIME',            txt:'Delivered memes on time. Unlike everything else.',                    era:'The Content Era',     img:'https://i.imgflip.com/1jwhww.jpg',  alt:'Expanding Brain meme',           sfx:'bassBoom'    },
   { hl:'THE GLOW-UP PATCH',         txt:'Upgrades installed. Personality remains undefeated.',                 era:'The Upgrade',         img:'https://i.imgflip.com/43a45p.png',  alt:'Buff Doge vs Cheems meme',       sfx:'risingChime' },
-  { hl:'TODAY: LEVEL UP',           txt:'Another year added. Same Samik. More legendary.',                     era:'Right Now',           img:'https://i.imgflip.com/gtj5t.jpg',   alt:'Oprah You Get A meme',           sfx:'confettiPop' },
+  { hl:'TODAY: LEVEL UP',           txt:'Another year added. Same Bochya. More legendary.',                    era:'Right Now',           img:'https://i.imgflip.com/gtj5t.jpg',   alt:'Oprah You Get A meme',           sfx:'confettiPop' },
 ];
 
 const MEMES = [
@@ -541,8 +541,8 @@ document.getElementById('dl-btn').addEventListener('click',()=>{
     x.fillStyle='#D9D2C7'; x.font='500 13px sans-serif'; x.fillText(k,bx+22,by+104);
   });
   // Footer
-  x.fillStyle='rgba(243,238,229,0.22)'; x.font='500 14px sans-serif'; x.textAlign='center'; x.fillText('samik: the wrap · 2026',360,870);
-  const a=document.createElement('a'); a.download='samik-legend-card.png'; a.href=c.toDataURL('image/png'); a.click();
+  x.fillStyle='rgba(243,238,229,0.22)'; x.font='500 14px sans-serif'; x.textAlign='center'; x.fillText('bochya: the wrap · 2026',360,870);
+  const a=document.createElement('a'); a.download='bochya-legend-card.png'; a.href=c.toDataURL('image/png'); a.click();
 });
 
 // Replay
