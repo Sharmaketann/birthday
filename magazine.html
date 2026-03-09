@@ -299,7 +299,8 @@
     }
     .pg3-photo-wrap img {
       width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
+      object-fit: contain; object-position: center top;
+      background: #080808;
       display: block;
     }
 
@@ -345,7 +346,8 @@
     ══════════════════════════════════ */
     #pg4 { background: var(--ink); display: grid; grid-template-columns: 58% 42%; }
     .feat-img-col { position: relative; overflow: hidden; min-height: calc(100vh - 48px); }
-    .feat-img-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .feat-img-col { background: var(--ink); }
+    .feat-img-col img { width: 100%; height: 100%; object-fit: contain; object-position: top center; }
     .feat-img-col::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(to right, transparent 60%, var(--ink) 100%);
@@ -396,8 +398,9 @@
       flex: 1; display: grid; gap: 3px; padding: 3px;
       grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr;
     }
-    .cg-cell { position: relative; overflow: hidden; min-height: 120px; }
+    .cg-cell { position: relative; overflow: hidden; min-height: 120px; background: #1a1a1a; }
     .cg-cell img { width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: contrast(1.08) saturate(0.85); transition: filter 0.4s; }
+    .cg-cell.main img { object-fit: contain; }
     .cg-cell:hover img { filter: contrast(1.1) saturate(1); }
     .cg-cell.main { grid-row: span 2; }
     .cg-label {
@@ -481,6 +484,22 @@
       .bd-col1, .bd-col2, .bd-col3 { border: none; }
       #pg5 .contact-grid { grid-template-columns: 1fr 1fr; }
       .cg-cell.main { grid-row: span 1; }
+    }
+
+    /* ── LARGE SCREEN: prevent portrait photos from over-zooming ── */
+    @media (min-width: 1024px) {
+      /* Photo spread (pg3): constrain width so portrait isn't stretched full-vw */
+      .pg3-photo-wrap {
+        max-width: min(560px, 52vw);
+        margin-left: auto;
+        margin-right: auto;
+      }
+      /* Cover: keep full-bleed but anchor to top so face shows */
+      .cov-bg img { object-position: 50% 8%; }
+      /* Page 2 group photo: slightly less height so it's less cropped */
+      .pg2-group-photo { height: 34%; }
+      /* Contact grid: cap height so cells don't become massive on tall screens */
+      .contact-grid { max-height: min(48vh, 400px); }
     }
   </style>
 </head>
@@ -706,13 +725,13 @@
       <div class="film-hole"></div>
       <div class="film-thumb"><img src="photos/bochya-partners.jpeg"   alt="Partners in Crime" loading="lazy" decoding="async"><div class="film-num">06</div></div>
       <div class="film-hole"></div>
-      <div class="film-thumb"><img src="photos/bochya-cover.jpeg"      alt="Portrait"          loading="lazy" decoding="async"><div class="film-num">07</div></div>
+      <div class="film-thumb"><img src="photos/bochya-nashedi.jpeg"    alt="Nashedi"           loading="lazy" decoding="async"><div class="film-num">07</div></div>
       <div class="film-hole"></div>
-      <div class="film-thumb"><img src="photos/bochya-sunglasses.jpeg" alt="Vibes"             loading="lazy" decoding="async"><div class="film-num">08</div></div>
+      <div class="film-thumb"><img src="photos/bochya-sula.jpeg"       alt="Sula Certified"    loading="lazy" decoding="async"><div class="film-num">08</div></div>
       <div class="film-hole"></div>
-      <div class="film-thumb"><img src="photos/bochya-group.jpeg"      alt="The Crew"          loading="lazy" decoding="async"><div class="film-num">09</div></div>
+      <div class="film-thumb"><img src="photos/bochya-puppy.jpeg"      alt="Playful"           loading="lazy" decoding="async"><div class="film-num">09</div></div>
       <div class="film-hole"></div>
-      <div class="film-thumb"><img src="photos/bochya-anarkali.jpeg"   alt="Festive"           loading="lazy" decoding="async"><div class="film-num">10</div></div>
+      <div class="film-thumb"><img src="photos/bochya-partners.jpeg"   alt="Partners in Crime" loading="lazy" decoding="async"><div class="film-num">10</div></div>
       <div class="film-hole"></div>
     </div>
   </div>
