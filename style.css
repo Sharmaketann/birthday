@@ -175,8 +175,8 @@
 
     /* ══ SLIDE 6: MEME MONTAGE ══ */
     #s6 { gap: 20px; }
-    .meme-grid { position: relative; width: 100%; max-width: min(740px, 88vw); aspect-ratio: 4/3; border-radius: 22px; overflow: hidden; background: var(--surface); border: 1px solid var(--divider); cursor: pointer; }
-    .meme-grid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+    .meme-grid { position: relative; width: min(520px, 90vw); height: min(60vh, 480px); border-radius: 22px; overflow: hidden; background: var(--surface); border: 1px solid var(--divider); cursor: pointer; }
+    .meme-grid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; }
     .meme-pause-badge { position: absolute; bottom: 14px; right: 14px; background: rgba(7,27,28,.88); border-radius: 8px; padding: 6px 14px; font-size: clamp(0.75rem, 1.4vw, 0.88rem); font-family: 'Inter', sans-serif; color: var(--cream-muted); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
     .meme-grid.paused .meme-pause-badge { opacity: 1; }
 

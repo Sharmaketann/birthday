@@ -19,18 +19,12 @@ const MEMORIES = [
 ];
 
 const MEMES = [
-  { src:'https://i.imgflip.com/30b1gx.jpg',  alt:'Drake Hotline Bling'        },
-  { src:'https://i.imgflip.com/1ur9b0.jpg',  alt:'Distracted Boyfriend'       },
-  { src:'https://i.imgflip.com/345v97.jpg',  alt:'Woman Yelling At Cat'       },
-  { src:'https://i.imgflip.com/3qqcim.png',  alt:'Panik Kalm Panik'           },
-  { src:'https://i.imgflip.com/26jxvz.jpg',  alt:"Gru's Plan"                 },
-  { src:'https://i.imgflip.com/wxica.jpg',   alt:'This Is Fine'               },
-  { src:'https://i.imgflip.com/2kbn1e.jpg',  alt:'Surprised Pikachu'          },
-  { src:'https://i.imgflip.com/3eqjd8.jpg',  alt:'Spider Man Triple'          },
-  { src:'https://i.imgflip.com/2ybua0.png',  alt:'Tuxedo Winnie The Pooh'     },
-  { src:'https://i.imgflip.com/1h7in3.jpg',  alt:'Roll Safe Think About It'   },
-  { src:'https://i.imgflip.com/39t1o.jpg',   alt:'Leonardo DiCaprio Cheers'   },
-  { src:'https://i.imgflip.com/gk5el.jpg',   alt:'Hide the Pain Harold'       },
+  { src:'photos/bochya-cover.jpeg',       alt:'Bochya portrait'          },
+  { src:'photos/bochya-sunglasses.jpeg',  alt:'Bochya sunglasses selfie' },
+  { src:'photos/bochya-anarkali.jpeg',    alt:'Bochya in anarkali'       },
+  { src:'photos/bochya-puppy.jpeg',       alt:'Bochya puppy filter'      },
+  { src:'photos/bochya-group.jpeg',       alt:'Bochya with friends'      },
+  { src:'photos/bochya-partners.jpeg',    alt:'Partners in crime'        },
 ];
 
 // ═══════════════════════════════════════════════════════════════
