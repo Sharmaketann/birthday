@@ -8,7 +8,7 @@ gsap.defaults({ ease: 'power2.out', overwrite: 'auto' });
 const MEMORIES = [
   { hl:'BACHPAN KA SWAG',           txt:'Chhota sa filter, bada sa attitude. Yeh sab shuruaat thi.',                era:'The Origin',          img:'photos/bochya-puppy.jpeg',      alt:'Bochya puppy filter',     sfx:'softPop'      },
   { hl:'PADHAI LESS, VIBE MORE',    txt:'Sunglasses on, lectures off. Front bench sirf swag ke liye.',              era:'The School Days',      img:'photos/bochya-sunglasses.jpeg', alt:'Bochya sunglasses',       sfx:'bellTap'      },
-  { hl:'GLOW UP LOADED ✨',         txt:'Jab upgrades install hue toh sab ne dekha. GPU bhi hang ho gaya.',         era:'The Glow-Up',          img:'photos/bochya-cover.jpeg',      alt:'Bochya portrait',         sfx:'recordScratch'},
+  { hl:'GLOW UP LOADED ✨',         txt:'Jab glow up aaya toh sab ne dekha. Jawab hi nahi tha.',                     era:'The Glow-Up',          img:'photos/bochya-cover.jpeg',      alt:'Bochya portrait',         sfx:'recordScratch'},
   { hl:'FUNCTION MODE: ON 🎉',      txt:'Exams nahi, functions mein result aata hai. Always ready.',                era:'The Degree Years',     img:'photos/bochya-anarkali.jpeg',   alt:'Bochya in anarkali',      sfx:'crowdCheer'   },
   { hl:'PARTNERS IN CRIME 🔴',      txt:'Dono ne plan banaya, dono ne execute kiya, dono ne deny kiya.',            era:'The Victory Lap',      img:'photos/bochya-partners.jpeg',   alt:'Partners in crime',       sfx:'trophyDing'   },
   { hl:'GANG TRIP CONFIRMED 🏔️',    txt:'Pahadon pe chali, photos bhi aaye, wahaan bhi full filmy scene.',          era:'The Social Era',       img:'photos/bochya-group.jpeg',      alt:'Bochya with friends',     sfx:'notifPing'    },
