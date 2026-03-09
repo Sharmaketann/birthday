@@ -19,12 +19,12 @@ const MEMORIES = [
 ];
 
 const MEMES = [
-  { src:'photos/bochya-cover.jpeg',       alt:'Bochya portrait'          },
-  { src:'photos/bochya-sunglasses.jpeg',  alt:'Bochya sunglasses selfie' },
-  { src:'photos/bochya-anarkali.jpeg',    alt:'Bochya in anarkali'       },
-  { src:'photos/bochya-puppy.jpeg',       alt:'Bochya puppy filter'      },
-  { src:'photos/bochya-group.jpeg',       alt:'Bochya with friends'      },
-  { src:'photos/bochya-partners.jpeg',    alt:'Partners in crime'        },
+  { src:'photos/bochya-cover.jpeg',       alt:'Bochya portrait',          cap:'Ek hi shot. Zero effort. Full filmy. 🎬' },
+  { src:'photos/bochya-sunglasses.jpeg',  alt:'Bochya sunglasses selfie', cap:'Dhoop nahi thi, attitude tha. ☀️'        },
+  { src:'photos/bochya-anarkali.jpeg',    alt:'Bochya in anarkali',       cap:'Function mein aayi aur function ban gayi. 🔥' },
+  { src:'photos/bochya-puppy.jpeg',       alt:'Bochya puppy filter',      cap:'Filter on, maar daala sab ko. 🐾'        },
+  { src:'photos/bochya-group.jpeg',       alt:'Bochya with friends',      cap:'Sahi gang mile toh pahaad bhi seedha lagta hai. 🏔️' },
+  { src:'photos/bochya-partners.jpeg',    alt:'Partners in crime',        cap:'Receipt confirmed. Ab deny mat karna. 🔴' },
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -416,36 +416,78 @@ document.getElementById('mem-prev').addEventListener('click',()=>{ clearTimeout(
 document.getElementById('mem-next').addEventListener('click',()=>{ clearTimeout(mTimer); if(mIdx<MEMORIES.length-1) showMem(mIdx+1); else goTo(6); });
 
 // ═══════════════════════════════════════════════════════════════
-// MEME MONTAGE
+// RECEIPTS DECK
 // ═══════════════════════════════════════════════════════════════
-let mmIdx=0, mmTimer=null, mmPaused=false;
+let deckCards=[], deckIdx=0, deckTimer=null, deckThrowing=false;
+const DECK_HOLD=3000;
 
 function initMemes() {
-  const grid=document.getElementById('meme-grid');
-  grid.querySelectorAll('img').forEach(e=>e.remove());
-  MEMES.forEach((m,i)=>{
+  const deck=document.getElementById('receipt-deck');
+  deck.innerHTML=''; deckCards=[]; deckIdx=0; deckThrowing=false;
+  clearTimeout(deckTimer);
+  // Build cards — append in reverse so index-0 sits on top (highest z-index)
+  for(let i=MEMES.length-1; i>=0; i--){
+    const card=document.createElement('div');
+    card.className='receipt-card';
     const img=document.createElement('img');
-    img.src=m.src; img.alt=m.alt; img.loading='lazy';
-    gsap.set(img, { opacity: i===0 ? 1 : 0 });
-    grid.insertBefore(img,grid.querySelector('.meme-pause-badge'));
-  });
-  mmIdx=0; mmPaused=false;
-  grid.classList.remove('paused');
-  clearInterval(mmTimer);
-  mmTimer=setInterval(()=>{
-    if(mmPaused) return;
-    const imgs=grid.querySelectorAll('img');
-    gsap.to(imgs[mmIdx], { opacity:0, duration:0.3 });
-    mmIdx=(mmIdx+1)%MEMES.length;
-    gsap.to(imgs[mmIdx], { opacity:1, duration:0.3 });
-  }, 430);
+    img.src=MEMES[i].src; img.alt=MEMES[i].alt; img.loading='lazy';
+    card.appendChild(img);
+    deck.appendChild(card);
+    deckCards[i]=card;
+  }
+  positionDeck(false);
+  setCaption(0);
+  deckTimer=setTimeout(throwTop, DECK_HOLD);
 }
 
-document.getElementById('meme-grid').addEventListener('click',()=>{
-  mmPaused=!mmPaused;
-  document.getElementById('meme-grid').classList.toggle('paused',mmPaused);
+function positionDeck(anim) {
+  for(let i=deckIdx; i<MEMES.length; i++){
+    const card=deckCards[i]; if(!card) continue;
+    const d=i-deckIdx; // 0=top
+    const rot = d===0 ? 0 : (i%2===0 ? -1 : 1)*Math.min(d*5, 12);
+    const sc  = Math.max(0.80, 1-d*0.055);
+    const yOff= d*5;
+    const z   = MEMES.length-i;
+    const props={ rotation:rot, scale:sc, y:yOff, zIndex:z, transformOrigin:'50% 100%', opacity:1 };
+    anim ? gsap.to(card,{...props, duration:0.38*D, ease:'back.out(1)' })
+         : gsap.set(card, props);
+  }
+}
+
+function throwTop() {
+  if(deckThrowing || deckIdx>=MEMES.length) return;
+  deckThrowing=true;
+  const card=deckCards[deckIdx];
+  const dir=Math.random()>0.5?1:-1;
+  const tx=dir*(window.innerWidth*0.9);
+  const ty=-(window.innerHeight*0.25);
+  const tr=dir*(30+Math.random()*25);
+  gsap.to(card,{ x:tx, y:ty, rotation:tr, opacity:0, scale:0.75,
+    duration:0.42*D, ease:'power2.in',
+    onComplete(){
+      card.style.visibility='hidden';
+      deckThrowing=false; deckIdx++;
+      if(deckIdx>=MEMES.length){ clearTimeout(deckTimer); goTo(7); return; }
+      positionDeck(true);
+      setCaption(deckIdx);
+      deckTimer=setTimeout(throwTop, DECK_HOLD);
+    }
+  });
+}
+
+function setCaption(idx) {
+  const el=document.getElementById('receipt-caption');
+  const text=idx<MEMES.length ? MEMES[idx].cap : '';
+  gsap.to(el,{ opacity:0, y:-6, duration:0.18*D, onComplete(){
+    el.textContent=text;
+    gsap.fromTo(el,{opacity:0,y:8},{opacity:1,y:0,duration:0.32*D});
+  }});
+}
+
+document.getElementById('receipt-deck').addEventListener('click',()=>{
+  clearTimeout(deckTimer); throwTop();
 });
-document.getElementById('meme-skip').addEventListener('click',()=>{ clearInterval(mmTimer); goTo(7); });
+document.getElementById('meme-skip').addEventListener('click',()=>{ clearTimeout(deckTimer); goTo(7); });
 
 // ═══════════════════════════════════════════════════════════════
 // FINAL MESSAGE

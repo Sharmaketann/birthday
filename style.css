@@ -173,12 +173,12 @@
     .mem-prev { left: clamp(14px,2.8vw,30px); }
     .mem-next-btn { right: clamp(14px,2.8vw,30px); }
 
-    /* ══ SLIDE 6: MEME MONTAGE ══ */
-    #s6 { gap: 20px; }
-    .meme-grid { position: relative; width: min(520px, 90vw); height: min(60vh, 480px); border-radius: 22px; overflow: hidden; background: var(--surface); border: 1px solid var(--divider); cursor: pointer; }
-    .meme-grid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; }
-    .meme-pause-badge { position: absolute; bottom: 14px; right: 14px; background: rgba(7,27,28,.88); border-radius: 8px; padding: 6px 14px; font-size: clamp(0.75rem, 1.4vw, 0.88rem); font-family: 'Inter', sans-serif; color: var(--cream-muted); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-    .meme-grid.paused .meme-pause-badge { opacity: 1; }
+    /* ══ SLIDE 6: RECEIPTS DECK ══ */
+    #s6 { gap: 10px; justify-content: center; }
+    .receipt-deck { position: relative; width: min(300px, 72vw); height: min(420px, 58vh); flex-shrink: 0; }
+    .receipt-card { position: absolute; inset: 0; border-radius: 20px; overflow: hidden; box-shadow: 0 16px 56px rgba(0,0,0,.7), 0 4px 16px rgba(0,0,0,.4); cursor: pointer; will-change: transform; -webkit-user-select: none; user-select: none; }
+    .receipt-card img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .receipt-caption { font-family: 'Inter', sans-serif; font-size: clamp(0.82rem, 2.2vw, 1rem); color: var(--cream); text-align: center; max-width: min(380px, 88vw); letter-spacing: 0.01em; min-height: 2.6em; line-height: 1.5; padding: 0 16px; }
 
     /* ══ SLIDE 7: FINAL ══ */
     #s7 { text-align: center; gap: 0; }
