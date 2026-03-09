@@ -6,25 +6,26 @@ gsap.defaults({ ease: 'power2.out', overwrite: 'auto' });
 // DATA
 // ═══════════════════════════════════════════════════════════════
 const MEMORIES = [
-  { hl:'BACHPAN KA SWAG',           txt:'Chhota sa filter, bada sa attitude. Yeh sab shuruaat thi.',           era:'The Origin',          img:'photos/bochya-puppy.jpeg',      alt:'Bochya puppy filter',     sfx:'softPop'      },
-  { hl:'PADHAI LESS, VIBE MORE',    txt:'Sunglasses on, lectures off. Front bench sirf swag ke liye.',         era:'The School Days',      img:'photos/bochya-sunglasses.jpeg', alt:'Bochya sunglasses',       sfx:'bellTap'      },
-  { hl:'GLOW UP LOADED ✨',         txt:'Jab upgrades install hue toh sab ne dekha. GPU bhi hang ho gaya.',    era:'The Glow-Up',          img:'photos/bochya-cover.jpeg',      alt:'Bochya portrait',         sfx:'recordScratch'},
-  { hl:'FUNCTION MODE: ON 🎉',      txt:'Exams nahi, functions mein result aata hai. Always ready.',           era:'The Degree Years',     img:'photos/bochya-anarkali.jpeg',   alt:'Bochya in anarkali',      sfx:'crowdCheer'   },
-  { hl:'PARTNERS IN CRIME 🔴',      txt:'Dono ne plan banaya, dono ne execute kiya, dono ne deny kiya.',       era:'The Victory Lap',      img:'photos/bochya-partners.jpeg',   alt:'Partners in crime',       sfx:'trophyDing'   },
-  { hl:'GANG TRIP CONFIRMED 🏔️',    txt:'Pahadon pe chali, photos bhi aaye, wahaan bhi full filmy scene.',     era:'The Social Era',       img:'photos/bochya-group.jpeg',      alt:'Bochya with friends',     sfx:'notifPing'    },
-  { hl:'GHUMNA ZAROORI HAI 🎬',     txt:'Ghumna tha, ghumaai, video bhi banaya. Main character energy 100%.',  era:'The Great Outdoors',   vid:'photos/bochya-video2.mp4',      alt:'Bochya video',            sfx:'cameraClick'  },
-  { hl:'FILTER QUEEN ERA 🐾',       txt:'Har filter try kiya. Puppy wala best lagaa. Obviously toh hoga.',     era:'The Content Era',      img:'photos/bochya-puppy.jpeg',      alt:'Bochya puppy filter',     sfx:'bassBoom'     },
-  { hl:'FINAL FORM UNLOCKED 👑',    txt:'Portrait mode on, attitude max, zero edits needed. Sach mein.',       era:'The Upgrade',          vid:'photos/bochya.mp4',             alt:'Bochya video',            sfx:'risingChime'  },
-  { hl:'AAJ KA DIN, TERA DIN 🎂',   txt:'Another year added. Same Bochya. More legendary. Happy Birthday!',   era:'Right Now',            img:'photos/bochya-anarkali.jpeg',   alt:'Bochya in anarkali',      sfx:'confettiPop'  },
+  { hl:'BACHPAN KA SWAG',           txt:'Chhota sa filter, bada sa attitude. Yeh sab shuruaat thi.',                era:'The Origin',          img:'photos/bochya-puppy.jpeg',      alt:'Bochya puppy filter',     sfx:'softPop'      },
+  { hl:'PADHAI LESS, VIBE MORE',    txt:'Sunglasses on, lectures off. Front bench sirf swag ke liye.',              era:'The School Days',      img:'photos/bochya-sunglasses.jpeg', alt:'Bochya sunglasses',       sfx:'bellTap'      },
+  { hl:'GLOW UP LOADED ✨',         txt:'Jab upgrades install hue toh sab ne dekha. GPU bhi hang ho gaya.',         era:'The Glow-Up',          img:'photos/bochya-cover.jpeg',      alt:'Bochya portrait',         sfx:'recordScratch'},
+  { hl:'FUNCTION MODE: ON 🎉',      txt:'Exams nahi, functions mein result aata hai. Always ready.',                era:'The Degree Years',     img:'photos/bochya-anarkali.jpeg',   alt:'Bochya in anarkali',      sfx:'crowdCheer'   },
+  { hl:'PARTNERS IN CRIME 🔴',      txt:'Dono ne plan banaya, dono ne execute kiya, dono ne deny kiya.',            era:'The Victory Lap',      img:'photos/bochya-partners.jpeg',   alt:'Partners in crime',       sfx:'trophyDing'   },
+  { hl:'GANG TRIP CONFIRMED 🏔️',    txt:'Pahadon pe chali, photos bhi aaye, wahaan bhi full filmy scene.',          era:'The Social Era',       img:'photos/bochya-group.jpeg',      alt:'Bochya with friends',     sfx:'notifPing'    },
+  { hl:'GHUMNA ZAROORI HAI 🎬',     txt:'Ghumna tha, ghumaai, video bhi banaya. Main character energy 100%.',       era:'The Great Outdoors',   vid:'photos/bochya-video2.mp4',      alt:'Bochya outdoor video',    sfx:'cameraClick'  },
+  { hl:'SULA CERTIFIED 🍷',         txt:'Yeh aankhein khud bata rahi hain sab kuch. Sula ne kya kar diya yaar.',    era:'The Nashedi Era',      img:'photos/bochya-nashedi.jpeg',    alt:'Bochya nashedi look',     sfx:'bassBoom'     },
+  { hl:'REEL LIFE > REAL LIFE 📱',  txt:'Camera on, vibe on, baaki sab off. Bas yahi life hai.',                    era:'The Content Era',      vid:'photos/bochya-video3.mp4',      alt:'Bochya reel video',       sfx:'risingChime'  },
+  { hl:'FINAL FORM UNLOCKED 👑',    txt:'Portrait mode on, attitude max, zero edits needed. Happy Birthday Bochya!',era:'Right Now',            vid:'photos/bochya.mp4',             alt:'Bochya finale video',     sfx:'confettiPop'  },
 ];
 
 const MEMES = [
-  { src:'photos/bochya-cover.jpeg',       alt:'Bochya portrait',          cap:'Ek hi shot. Zero effort. Full filmy. 🎬' },
-  { src:'photos/bochya-sunglasses.jpeg',  alt:'Bochya sunglasses selfie', cap:'Dhoop nahi thi, attitude tha. ☀️'        },
-  { src:'photos/bochya-anarkali.jpeg',    alt:'Bochya in anarkali',       cap:'Function mein aayi aur function ban gayi. 🔥' },
-  { src:'photos/bochya-puppy.jpeg',       alt:'Bochya puppy filter',      cap:'Filter on, maar daala sab ko. 🐾'        },
-  { src:'photos/bochya-group.jpeg',       alt:'Bochya with friends',      cap:'Sahi gang mile toh pahaad bhi seedha lagta hai. 🏔️' },
-  { src:'photos/bochya-partners.jpeg',    alt:'Partners in crime',        cap:'Receipt confirmed. Ab deny mat karna. 🔴' },
+  { src:'photos/bochya-cover.jpeg',       alt:'Bochya portrait',          cap:'Ek hi shot. Zero effort. Full filmy. 🎬'              },
+  { src:'photos/bochya-sunglasses.jpeg',  alt:'Bochya sunglasses selfie', cap:'Dhoop nahi thi, attitude tha. ☀️'                     },
+  { src:'photos/bochya-anarkali.jpeg',    alt:'Bochya in anarkali',       cap:'Function mein aayi aur function ban gayi. 🔥'          },
+  { src:'photos/bochya-puppy.jpeg',       alt:'Bochya puppy filter',      cap:'Filter on, maar daala sab ko. 🐾'                     },
+  { src:'photos/bochya-group.jpeg',       alt:'Bochya with friends',      cap:'Sahi gang mile toh pahaad bhi seedha lagta hai. 🏔️'   },
+  { src:'photos/bochya-partners.jpeg',    alt:'Partners in crime',        cap:'Receipt confirmed. Ab deny mat karna. 🔴'              },
+  { src:'photos/bochya-nashedi.jpeg',     alt:'Bochya nashedi look',      cap:'Sula wali raat ka yeh hero. Nashedi certified. 🍷'     },
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -428,6 +429,7 @@ const LAND=[
   { x:-5, y:8,  r:-4 },
   { x:10, y:-6, r:8  },
   { x:-7, y:4,  r:-6 },
+  { x:5,  y:-5, r:-9 },
 ];
 
 function initMemes() {
