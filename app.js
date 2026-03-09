@@ -13,7 +13,7 @@ const MEMORIES = [
   { hl:'PARTNERS IN CRIME 🔴',      txt:'Dono ne plan banaya, dono ne execute kiya, dono ne deny kiya.',            era:'The Victory Lap',      img:'photos/bochya-partners.jpeg',   alt:'Partners in crime',       sfx:'trophyDing'   },
   { hl:'GANG TRIP CONFIRMED 🏔️',    txt:'Pahadon pe chali, photos bhi aaye, wahaan bhi full filmy scene.',          era:'The Social Era',       img:'photos/bochya-group.jpeg',      alt:'Bochya with friends',     sfx:'notifPing'    },
   { hl:'GHUMNA ZAROORI HAI 🎬',     txt:'Ghumna tha, ghumaai, video bhi banaya. Main character energy 100%.',       era:'The Great Outdoors',   vid:'photos/bochya-video2.mp4',      alt:'Bochya outdoor video',    sfx:'cameraClick'  },
-  { hl:'SULA CERTIFIED 🍷',         txt:'Yeh aankhein khud bata rahi hain sab kuch. Sula ne kya kar diya yaar.',    era:'The Nashedi Era',      img:'photos/bochya-nashedi.jpeg',    alt:'Bochya nashedi look',     sfx:'bassBoom'     },
+  { hl:'SULA CERTIFIED 🍷',         txt:'Bottle se badi personality. Sula wali nashedi — certified aur photographed.',era:'The Nashedi Era',      img:'photos/bochya-sula.jpeg',       alt:'Bochya at Sula Wines',    sfx:'bassBoom'     },
   { hl:'REEL LIFE > REAL LIFE 📱',  txt:'Camera on, vibe on, baaki sab off. Bas yahi life hai.',                    era:'The Content Era',      vid:'photos/bochya-video3.mp4',      alt:'Bochya reel video',       sfx:'risingChime'  },
   { hl:'FINAL FORM UNLOCKED 👑',    txt:'Portrait mode on, attitude max, zero edits needed. Happy Birthday Bochya!',era:'Right Now',            vid:'photos/bochya.mp4',             alt:'Bochya finale video',     sfx:'confettiPop'  },
 ];
@@ -25,7 +25,7 @@ const MEMES = [
   { src:'photos/bochya-puppy.jpeg',       alt:'Bochya puppy filter',      cap:'Filter on, maar daala sab ko. 🐾'                     },
   { src:'photos/bochya-group.jpeg',       alt:'Bochya with friends',      cap:'Sahi gang mile toh pahaad bhi seedha lagta hai. 🏔️'   },
   { src:'photos/bochya-partners.jpeg',    alt:'Partners in crime',        cap:'Receipt confirmed. Ab deny mat karna. 🔴'              },
-  { src:'photos/bochya-nashedi.jpeg',     alt:'Bochya nashedi look',      cap:'Sula wali raat ka yeh hero. Nashedi certified. 🍷'     },
+  { src:'photos/bochya-sula.jpeg',        alt:'Bochya at Sula Wines',     cap:'Bottle se badi personality. Nashedi certified. 🍷'    },
 ];
 
 // ═══════════════════════════════════════════════════════════════
