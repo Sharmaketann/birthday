@@ -416,77 +416,68 @@ document.getElementById('mem-prev').addEventListener('click',()=>{ clearTimeout(
 document.getElementById('mem-next').addEventListener('click',()=>{ clearTimeout(mTimer); if(mIdx<MEMORIES.length-1) showMem(mIdx+1); else goTo(6); });
 
 // ═══════════════════════════════════════════════════════════════
-// RECEIPTS DECK
+// RECEIPTS DECK — cards fly IN one by one automatically
 // ═══════════════════════════════════════════════════════════════
-let deckCards=[], deckIdx=0, deckTimer=null, deckThrowing=false;
-const DECK_HOLD=3000;
+let deckCards=[], deckTimer=null;
+const DECK_HOLD=2400; // pause between each card landing and next launching
+// Fixed landing positions so the pile looks natural
+const LAND=[
+  { x:4,  y:6,  r:3  },
+  { x:-9, y:-4, r:-7 },
+  { x:7,  y:3,  r:5  },
+  { x:-5, y:8,  r:-4 },
+  { x:10, y:-6, r:8  },
+  { x:-7, y:4,  r:-6 },
+];
 
 function initMemes() {
   const deck=document.getElementById('receipt-deck');
-  deck.innerHTML=''; deckCards=[]; deckIdx=0; deckThrowing=false;
-  clearTimeout(deckTimer);
-  // Build cards — append in reverse so index-0 sits on top (highest z-index)
-  for(let i=MEMES.length-1; i>=0; i--){
+  deck.innerHTML=''; deckCards=[]; clearTimeout(deckTimer);
+  MEMES.forEach((m,i)=>{
     const card=document.createElement('div');
     card.className='receipt-card';
     const img=document.createElement('img');
-    img.src=MEMES[i].src; img.alt=MEMES[i].alt; img.loading='lazy';
+    img.src=m.src; img.alt=m.alt; img.loading=i===0?'eager':'lazy';
     card.appendChild(img);
     deck.appendChild(card);
     deckCards[i]=card;
-  }
-  positionDeck(false);
-  setCaption(0);
-  deckTimer=setTimeout(throwTop, DECK_HOLD);
+    // Stage each card off-screen: alternate left / right sides
+    const dir=i%2===0?1:-1;
+    gsap.set(card,{
+      x: dir*(window.innerWidth*0.85),
+      y: (Math.random()-0.5)*80,
+      rotation: dir*(28+Math.random()*18),
+      scale:1, opacity:1, zIndex:i+1
+    });
+  });
+  setDeckCaption('');
+  deckTimer=setTimeout(()=>flyIn(0), 700);
 }
 
-function positionDeck(anim) {
-  for(let i=deckIdx; i<MEMES.length; i++){
-    const card=deckCards[i]; if(!card) continue;
-    const d=i-deckIdx; // 0=top
-    const rot = d===0 ? 0 : (i%2===0 ? -1 : 1)*Math.min(d*5, 12);
-    const sc  = Math.max(0.80, 1-d*0.055);
-    const yOff= d*5;
-    const z   = MEMES.length-i;
-    const props={ rotation:rot, scale:sc, y:yOff, zIndex:z, transformOrigin:'50% 100%', opacity:1 };
-    anim ? gsap.to(card,{...props, duration:0.38*D, ease:'back.out(1)' })
-         : gsap.set(card, props);
+function flyIn(idx) {
+  if(idx>=MEMES.length){
+    setDeckCaption('Aur yeh toh bas kuch receipts hain 😂');
+    deckTimer=setTimeout(()=>goTo(7), 2800);
+    return;
   }
-}
-
-function throwTop() {
-  if(deckThrowing || deckIdx>=MEMES.length) return;
-  deckThrowing=true;
-  const card=deckCards[deckIdx];
-  const dir=Math.random()>0.5?1:-1;
-  const tx=dir*(window.innerWidth*0.9);
-  const ty=-(window.innerHeight*0.25);
-  const tr=dir*(30+Math.random()*25);
-  gsap.to(card,{ x:tx, y:ty, rotation:tr, opacity:0, scale:0.75,
-    duration:0.42*D, ease:'power2.in',
-    onComplete(){
-      card.style.visibility='hidden';
-      deckThrowing=false; deckIdx++;
-      if(deckIdx>=MEMES.length){ clearTimeout(deckTimer); goTo(7); return; }
-      positionDeck(true);
-      setCaption(deckIdx);
-      deckTimer=setTimeout(throwTop, DECK_HOLD);
-    }
+  const card=deckCards[idx];
+  const land=LAND[idx]||{x:0,y:0,r:0};
+  gsap.to(card,{
+    x:land.x, y:land.y, rotation:land.r,
+    duration:0.52*D, ease:'back.out(1.7)',
+    onStart(){ setDeckCaption(MEMES[idx].cap); },
+    onComplete(){ deckTimer=setTimeout(()=>flyIn(idx+1), DECK_HOLD); }
   });
 }
 
-function setCaption(idx) {
+function setDeckCaption(text) {
   const el=document.getElementById('receipt-caption');
-  const text=idx<MEMES.length ? MEMES[idx].cap : '';
-  gsap.to(el,{ opacity:0, y:-6, duration:0.18*D, onComplete(){
+  gsap.to(el,{opacity:0,y:-6,duration:0.18*D,onComplete(){
     el.textContent=text;
     gsap.fromTo(el,{opacity:0,y:8},{opacity:1,y:0,duration:0.32*D});
   }});
 }
 
-document.getElementById('receipt-deck').addEventListener('click',()=>{
-  clearTimeout(deckTimer); throwTop();
-});
 document.getElementById('meme-skip').addEventListener('click',()=>{ clearTimeout(deckTimer); goTo(7); });
 
 // ═══════════════════════════════════════════════════════════════
